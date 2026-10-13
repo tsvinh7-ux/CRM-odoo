@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_commission_plan_user,plan user,model_dmag_commission_plan,dmag_crm.group_dmag_user,1,0,0,0
+access_commission_plan_manager,plan manager,model_dmag_commission_plan,dmag_crm.group_dmag_manager,1,1,1,1
+access_commission_plan_line_user,plan line user,model_dmag_commission_plan_line,dmag_crm.group_dmag_user,1,0,0,0
+access_commission_plan_line_manager,plan line manager,model_dmag_commission_plan_line,dmag_crm.group_dmag_manager,1,1,1,1
+access_commission_assignment_user,assignment user,model_dmag_commission_assignment,dmag_crm.group_dmag_user,1,0,0,0
+access_commission_assignment_manager,assignment manager,model_dmag_commission_assignment,dmag_crm.group_dmag_manager,1,1,1,1
+access_commission_override_user,override user,model_dmag_commission_assignment_override,dmag_crm.group_dmag_user,1,0,0,0
+access_commission_override_manager,override manager,model_dmag_commission_assignment_override,dmag_crm.group_dmag_manager,1,1,1,1
+access_commission_line_user,line user,model_dmag_commission_line,dmag_crm.group_dmag_user,1,0,0,0
+access_commission_line_manager,line manager,model_dmag_commission_line,dmag_crm.group_dmag_manager,1,1,1,1
+access_commission_line_invoice,line accountant,model_dmag_commission_line,account.group_account_invoice,1,0,0,0
+access_commission_statement_user,statement user,model_dmag_commission_statement,dmag_crm.group_dmag_user,1,1,0,0
+access_commission_statement_manager,statement manager,model_dmag_commission_statement,dmag_crm.group_dmag_manager,1,1,1,1
+access_commission_generate_manager,generate manager,model_dmag_commission_generate,dmag_crm.group_dmag_manager,1,1,1,1

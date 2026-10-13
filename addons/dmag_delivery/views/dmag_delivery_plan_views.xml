@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_delivery_plan_view_form" model="ir.ui.view">
+        <field name="name">dmag.delivery.plan.form</field>
+        <field name="model">dmag.delivery.plan</field>
+        <field name="arch" type="xml">
+            <form string="Lộ trình triển khai">
+                <header>
+                    <button name="action_refresh_pulse" type="object" string="Cập nhật Pulse" invisible="state != 'active'"/>
+                    <button name="action_create_reaudit" type="object" string="Tạo DDA lần 2" invisible="reaudit_id or state != 'active'" class="btn-primary"/>
+                    <button name="action_pause" type="object" string="Tạm dừng" invisible="state != 'active'"/>
+                    <button name="action_resume" type="object" string="Tiếp tục" invisible="state != 'paused'"/>
+                    <button name="action_done" type="object" string="Hoàn thành" invisible="state != 'active'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,done"/>
+                </header>
+                <div class="alert alert-danger mb-0" role="alert" invisible="pulse != 'red' or state != 'active'">
+                    <strong>Pulse Đỏ – cần can thiệp ngay:</strong>
+                    <field name="pulse_reason" readonly="1"/>
+                </div>
+                <div class="alert alert-warning mb-0" role="alert" invisible="pulse != 'yellow' or state != 'active'">
+                    <strong>Pulse Vàng – theo dõi sát:</strong>
+                    <field name="pulse_reason" readonly="1"/>
+                </div>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_projects" type="object" class="oe_stat_button" icon="fa-puzzle-piece" invisible="not project_count">
+                            <field name="project_count" widget="statinfo" string="Dự án thực địa"/>
+                        </button>
+                        <button name="action_view_sessions" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <field name="session_count" widget="statinfo" string="Buổi làm việc"/>
+                        </button>
+                    </div>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="sale_order_id"/>
+                            <field name="prescription_id"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_day90"/>
+                            <field name="progress" widget="progressbar"/>
+                            <field name="pulse" widget="badge" decoration-success="pulse == 'green'" decoration-warning="pulse == 'yellow'" decoration-danger="pulse == 'red'"/>
+                            <field name="pulse_date"/>
+                            <field name="reaudit_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Hạng mục" name="lines">
+                            <field name="line_ids">
+                                <list editable="bottom" decoration-danger="status == 'late'" decoration-success="status == 'done'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="pillar_id" optional="show"/>
+                                    <field name="tier"/>
+                                    <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                                    <field name="date_deadline"/>
+                                    <field name="channel_id" optional="hide"/>
+                                    <field name="project_id" optional="show"/>
+                                    <field name="sessions_total" optional="show"/>
+                                    <field name="sessions_done" optional="show"/>
+                                    <field name="learning_completion" optional="hide"/>
+                                    <field name="progress" widget="progressbar"/>
+                                    <field name="last_activity_date" optional="show"/>
+                                    <field name="status" widget="badge" decoration-danger="status == 'late'" decoration-success="status == 'done'" decoration-info="status == 'in_progress'"/>
+                                    <button name="action_add_session" type="object" icon="fa-plus" title="Thêm buổi"
+                                            invisible="tier not in ('guided', 'one_on_one')"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Buổi làm việc" name="sessions">
+                            <field name="session_ids" readonly="1">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="kind"/>
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_delivery_plan_view_list" model="ir.ui.view">
+        <field name="name">dmag.delivery.plan.list</field>
+        <field name="model">dmag.delivery.plan</field>
+        <field name="arch" type="xml">
+            <list string="Lộ trình triển khai" decoration-danger="pulse == 'red'" decoration-warning="pulse == 'yellow'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="date_start"/>
+                <field name="date_day90"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="pulse" widget="badge" decoration-success="pulse == 'green'" decoration-warning="pulse == 'yellow'" decoration-danger="pulse == 'red'"/>
+                <field name="state" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dmag_delivery_plan_view_kanban" model="ir.ui.view">
+        <field name="name">dmag.delivery.plan.kanban</field>
+        <field name="model">dmag.delivery.plan</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="pulse" group_create="false" records_draggable="false">
+                <field name="pulse"/>
+                <templates>
+                    <t t-name="card">
+                        <field name="partner_id" class="fw-bold"/>
+                        <field name="name" class="small text-muted"/>
+                        <field name="progress" widget="progressbar"/>
+                        <field name="pulse_reason" class="small text-muted"/>
+                        <footer>
+                            <field name="date_day90" class="small"/>
+                            <field name="activity_ids" widget="kanban_activity"/>
+                            <field name="user_id" widget="many2one_avatar_user" class="ms-auto"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="dmag_delivery_plan_view_search" model="ir.ui.view">
+        <field name="name">dmag.delivery.plan.search</field>
+        <field name="model">dmag.delivery.plan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="sale_order_id"/>
+                <filter string="Cần can thiệp (Vàng/Đỏ)" name="flagged" domain="[('pulse', 'in', ('yellow', 'red')), ('state', '=', 'active')]"/>
+                <filter string="Đang triển khai" name="active_plans" domain="[('state', '=', 'active')]"/>
+                <filter string="Của tôi" name="mine" domain="[('user_id', '=', uid)]"/>
+                <group>
+                    <filter string="Pulse" name="group_pulse" context="{'group_by': 'pulse'}"/>
+                    <filter string="Phụ trách" name="group_user" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dmag_delivery_plan" model="ir.actions.act_window">
+        <field name="name">Lộ trình triển khai</field>
+        <field name="res_model">dmag.delivery.plan</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="context">{'search_default_active_plans': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Chưa có lộ trình triển khai</p>
+            <p>Lộ trình được tạo tự động khi xác nhận đơn bán có module DMAG.</p>
+        </field>
+    </record>
+
+    <record id="action_dmag_delivery_flagged" model="ir.actions.act_window">
+        <field name="name">Cần can thiệp</field>
+        <field name="res_model">dmag.delivery.plan</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="context">{'search_default_flagged': 1}</field>
+    </record>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_dmag" model="ir.ui.view">
+        <field name="name">product.template.form.dmag</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="DMAG" name="dmag">
+                    <group>
+                        <group string="Module">
+                            <field name="dmag_is_module"/>
+                            <field name="dmag_module_code" invisible="not dmag_is_module"/>
+                            <field name="dmag_pillar_id" invisible="not dmag_is_module"/>
+                            <field name="dmag_tier" invisible="not dmag_is_module"/>
+                        </group>
+                        <group string="Khác">
+                            <field name="dmag_is_dda_deposit"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_list_dmag_catalog" model="ir.ui.view">
+        <field name="name">product.template.list.dmag.catalog</field>
+        <field name="model">product.template</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <list string="Danh mục module" editable="bottom">
+                <field name="dmag_module_code"/>
+                <field name="name"/>
+                <field name="dmag_pillar_id"/>
+                <field name="dmag_tier"/>
+                <field name="list_price"/>
+                <field name="dmag_is_module" column_invisible="True"/>
+                <field name="type" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_dmag_module_catalog" model="ir.actions.act_window">
+        <field name="name">Danh mục module × hình thức</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('dmag_is_module', '=', True)]</field>
+        <field name="context">{'default_dmag_is_module': True, 'default_type': 'service', 'group_by': ['dmag_module_code']}</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'list', 'view_id': ref('product_template_list_dmag_catalog')})]"/>
+    </record>
+</odoo>

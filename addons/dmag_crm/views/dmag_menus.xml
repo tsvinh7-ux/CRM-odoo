@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_dmag_root" name="DMAG CRM" web_icon="crm,static/description/icon.png" sequence="5"
+              groups="dmag_crm.group_dmag_user"/>
+
+    <menuitem id="menu_dmag_customers" name="Khách hàng" parent="menu_dmag_root" sequence="10"/>
+    <menuitem id="menu_dmag_clinics" name="Phòng khám" parent="menu_dmag_customers" action="action_dmag_clinics" sequence="10"/>
+    <menuitem id="menu_dmag_contacts" name="Người liên hệ" parent="menu_dmag_customers" action="contacts.action_contacts" sequence="20"/>
+
+    <menuitem id="menu_dmag_sales" name="Bán hàng" parent="menu_dmag_root" sequence="20"/>
+    <menuitem id="menu_dmag_pipeline_p1" name="P1 · Chẩn đoán" parent="menu_dmag_sales" action="action_dmag_pipeline_diagnosis" sequence="10"/>
+    <menuitem id="menu_dmag_pipeline_p2" name="P2 · Lộ trình module" parent="menu_dmag_sales" action="action_dmag_pipeline_prescription" sequence="20"/>
+    <menuitem id="menu_dmag_pipeline_all" name="Tất cả pipeline" parent="menu_dmag_sales" action="action_dmag_pipeline" sequence="30"/>
+    <menuitem id="menu_dmag_quotations" name="Báo giá &amp; đơn bán" parent="menu_dmag_sales" action="sale.action_quotations_with_onboarding" sequence="40"/>
+
+    <menuitem id="menu_dmag_config" name="Cấu hình" parent="menu_dmag_root" sequence="90" groups="dmag_crm.group_dmag_manager"/>
+    <menuitem id="menu_dmag_segment" name="Phân khúc PK" parent="menu_dmag_config" action="action_dmag_segment" sequence="10"/>
+    <menuitem id="menu_dmag_capacity" name="Suất triển khai theo quý" parent="menu_dmag_config" action="action_dmag_capacity" sequence="20"/>
+    <menuitem id="menu_dmag_stages" name="Giai đoạn &amp; cổng" parent="menu_dmag_config" action="crm.crm_stage_action" sequence="30"/>
+    <menuitem id="menu_dmag_teams" name="Pipeline (đội)" parent="menu_dmag_config" action="sales_team.crm_team_action_config" sequence="40"/>
+</odoo>

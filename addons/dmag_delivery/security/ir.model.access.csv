@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dmag_delivery_plan_user,dmag.delivery.plan user,model_dmag_delivery_plan,dmag_crm.group_dmag_user,1,1,1,0
+access_dmag_delivery_plan_manager,dmag.delivery.plan manager,model_dmag_delivery_plan,dmag_crm.group_dmag_manager,1,1,1,1
+access_dmag_delivery_line_user,dmag.delivery.line user,model_dmag_delivery_line,dmag_crm.group_dmag_user,1,1,1,1
+access_dmag_delivery_session_user,dmag.delivery.session user,model_dmag_delivery_session,dmag_crm.group_dmag_user,1,1,1,1

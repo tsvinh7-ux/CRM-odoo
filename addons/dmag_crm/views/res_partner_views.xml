@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_dmag" model="ir.ui.view">
+        <field name="name">res.partner.form.dmag</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-danger mb-0 text-center" role="alert" invisible="not dmag_t1_redflag">
+                    <strong>Cờ đỏ T1 – Pháp lý y tế chưa đạt.</strong> Chỉ được kê module khắc phục T1 cho đến khi đạt 10/10.
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="DMAG" name="dmag">
+                    <group invisible="not is_company">
+                        <group string="Phân loại">
+                            <field name="dmag_is_clinic"/>
+                            <field name="dmag_segment_id" options="{'no_create': True}"/>
+                            <label for="dmag_suggested_segment_id"/>
+                            <div class="o_row">
+                                <field name="dmag_suggested_segment_id" readonly="1"/>
+                                <button name="action_dmag_apply_suggested_segment" type="object" string="Áp dụng"
+                                        class="btn-link" invisible="not dmag_suggested_segment_id or dmag_suggested_segment_id == dmag_segment_id"/>
+                            </div>
+                            <field name="dmag_segment_override"/>
+                            <field name="dmag_segment_reason" invisible="not dmag_segment_override" required="dmag_segment_override"/>
+                            <field name="dmag_flow"/>
+                            <field name="dmag_stage_g"/>
+                            <field name="dmag_lifecycle"/>
+                            <field name="dmag_account_owner_id" widget="many2one_avatar_user"/>
+                            <field name="dmag_decision_disc"/>
+                        </group>
+                        <group string="Chẩn đoán">
+                            <field name="dmag_dda_score"/>
+                            <field name="dmag_dda_date"/>
+                            <field name="dmag_t1_redflag"/>
+                        </group>
+                        <group string="Quy mô">
+                            <field name="dmag_chair_count"/>
+                            <field name="dmag_branch_count"/>
+                            <field name="dmag_doctor_count"/>
+                            <field name="dmag_staff_count"/>
+                            <field name="dmag_monthly_revenue"/>
+                            <field name="dmag_revenue_per_chair"/>
+                        </group>
+                        <group string="Vận hành">
+                            <field name="dmag_owner_revenue_pct"/>
+                            <field name="dmag_owner_chair_hours"/>
+                            <field name="dmag_specialty"/>
+                            <field name="dmag_software"/>
+                            <field name="dmag_hub"/>
+                            <field name="dmag_phone_key" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                    <group invisible="is_company">
+                        <group string="Hội đồng mua">
+                            <field name="dmag_buying_role"/>
+                            <field name="dmag_owner_type"/>
+                            <field name="dmag_disc"/>
+                        </group>
+                        <group string="Đồng ý nhận thông tin (Luật BVDLCN)">
+                            <field name="dmag_consent"/>
+                            <field name="dmag_consent_date" invisible="not dmag_consent"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_dmag_clinic_list" model="ir.ui.view">
+        <field name="name">res.partner.list.dmag.clinic</field>
+        <field name="model">res.partner</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <list string="Phòng khám">
+                <field name="name"/>
+                <field name="phone" optional="show"/>
+                <field name="state_id" string="Tỉnh/TP" optional="show"/>
+                <field name="dmag_segment_id"/>
+                <field name="dmag_stage_g"/>
+                <field name="dmag_dda_score" optional="show"/>
+                <field name="dmag_t1_redflag" optional="hide"/>
+                <field name="dmag_lifecycle" optional="show"/>
+                <field name="dmag_chair_count" optional="hide"/>
+                <field name="dmag_monthly_revenue" optional="hide" sum="Tổng"/>
+                <field name="dmag_decision_disc" optional="hide"/>
+                <field name="dmag_account_owner_id" widget="many2one_avatar_user" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_partner_dmag_clinic_kanban" model="ir.ui.view">
+        <field name="name">res.partner.kanban.dmag.clinic</field>
+        <field name="model">res.partner</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="dmag_segment_id" group_create="false">
+                <field name="dmag_t1_redflag"/>
+                <templates>
+                    <t t-name="card">
+                        <field name="name" class="fw-bold fs-5"/>
+                        <div class="d-flex gap-2 small">
+                            <field name="dmag_stage_g"/>
+                            <span t-if="record.dmag_dda_score.raw_value">· DDA <field name="dmag_dda_score"/></span>
+                            <span t-if="record.dmag_t1_redflag.raw_value" class="badge text-bg-danger">T1</span>
+                        </div>
+                        <field name="state_id" class="small text-muted"/>
+                        <footer>
+                            <field name="dmag_lifecycle" class="small"/>
+                            <field name="dmag_account_owner_id" widget="many2one_avatar_user" class="ms-auto"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_partner_dmag_search" model="ir.ui.view">
+        <field name="name">res.partner.search.dmag</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inactive']" position="before">
+                <filter string="Phòng khám" name="dmag_clinic" domain="[('dmag_is_clinic', '=', True)]"/>
+                <filter string="Cờ đỏ T1" name="dmag_redflag" domain="[('dmag_t1_redflag', '=', True)]"/>
+                <filter string="PK3 trọng tâm" name="dmag_focus" domain="[('dmag_segment_id.is_focus', '=', True)]"/>
+                <separator/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Phân khúc" name="group_dmag_segment" context="{'group_by': 'dmag_segment_id'}"/>
+                <filter string="Chặng" name="group_dmag_stage" context="{'group_by': 'dmag_stage_g'}"/>
+                <filter string="Account Owner" name="group_dmag_owner" context="{'group_by': 'dmag_account_owner_id'}"/>
+            </xpath>
+            <field name="name" position="after">
+                <field name="dmag_phone_key" string="SĐT (chuẩn hoá)" filter_domain="[('dmag_phone_key', 'ilike', self)]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_dmag_clinics" model="ir.actions.act_window">
+        <field name="name">Phòng khám</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('dmag_is_clinic', '=', True)]</field>
+        <field name="context">{'default_is_company': True, 'default_dmag_is_clinic': True}</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_partner_dmag_clinic_kanban')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_partner_dmag_clinic_list')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Tạo hồ sơ phòng khám đầu tiên</p>
+            <p>Mỗi phòng khám chỉ có một hồ sơ: mọi cơ hội, DDA, lộ trình, đơn bán và thanh toán đều gắn vào đây.</p>
+        </field>
+    </record>
+</odoo>

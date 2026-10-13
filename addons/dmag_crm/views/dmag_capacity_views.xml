@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_capacity_view_list" model="ir.ui.view">
+        <field name="name">dmag.capacity.list</field>
+        <field name="model">dmag.capacity</field>
+        <field name="arch" type="xml">
+            <list string="Suất theo quý" editable="top" decoration-danger="slots_left &lt; 0" decoration-warning="slots_left == 0">
+                <field name="year"/>
+                <field name="quarter"/>
+                <field name="slots_total"/>
+                <field name="slots_used"/>
+                <field name="slots_left"/>
+                <field name="note"/>
+                <button name="action_view_leads" type="object" string="Xem cơ hội" icon="fa-list"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_dmag_capacity" model="ir.actions.act_window">
+        <field name="name">Suất triển khai theo quý</field>
+        <field name="res_model">dmag.capacity</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

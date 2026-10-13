@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_pillar_view_list" model="ir.ui.view">
+        <field name="name">dmag.pillar.list</field>
+        <field name="model">dmag.pillar</field>
+        <field name="arch" type="xml">
+            <list string="Trụ cột DDA" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="pass_score"/>
+                <field name="dso_score"/>
+                <field name="is_knockout"/>
+                <field name="description" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_dmag_pillar" model="ir.actions.act_window">
+        <field name="name">Trụ cột DDA</field>
+        <field name="res_model">dmag.pillar</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

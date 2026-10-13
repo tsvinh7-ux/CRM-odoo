@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_dmag" model="ir.ui.view">
+        <field name="name">crm.lead.form.dmag</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-danger mb-0 text-center" role="alert" invisible="not dmag_t1_redflag">
+                    <strong>Cờ đỏ T1 – Pháp lý y tế.</strong> Chỉ kê module khắc phục T1.
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="DMAG" name="dmag">
+                    <group>
+                        <group string="Đầu vào">
+                            <field name="dmag_pipeline_type"/>
+                            <field name="dmag_disc"/>
+                            <field name="dmag_segment_id" options="{'no_create': True}"/>
+                            <field name="dmag_stage_g"/>
+                            <field name="dmag_dda_score"/>
+                            <field name="dmag_t1_redflag" invisible="1"/>
+                            <field name="dmag_lead_owner_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group string="Fast-Check">
+                            <field name="dmag_fastcheck_done"/>
+                            <field name="dmag_fastcheck_score" invisible="not dmag_fastcheck_done"/>
+                            <field name="dmag_fastcheck_result" invisible="not dmag_fastcheck_done"/>
+                        </group>
+                        <group string="Suất triển khai thực địa">
+                            <field name="dmag_uses_capacity"/>
+                            <field name="dmag_capacity_approved_reason" invisible="not dmag_uses_capacity"/>
+                            <field name="dmag_capacity_approved_by" invisible="not dmag_capacity_approved_by"/>
+                            <button name="action_dmag_approve_overcapacity" type="object" string="Duyệt vượt suất"
+                                    class="btn-secondary" groups="dmag_crm.group_dmag_manager"
+                                    invisible="not dmag_uses_capacity or dmag_capacity_approved_by"
+                                    confirm="Duyệt cho cơ hội này dùng suất vượt chỉ tiêu quý?"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_kanban_dmag" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.dmag</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <div class="d-flex flex-wrap gap-1 small">
+                    <field name="dmag_segment_id" class="badge text-bg-light" invisible="not dmag_segment_id"/>
+                    <field name="dmag_stage_g" class="badge text-bg-light" invisible="not dmag_stage_g"/>
+                    <span class="badge text-bg-info" invisible="not dmag_dda_score">DDA <field name="dmag_dda_score"/></span>
+                    <span class="badge text-bg-danger" invisible="not dmag_t1_redflag">T1</span>
+                    <span class="badge text-bg-warning" invisible="not dmag_uses_capacity">Suất</span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_list_dmag" model="ir.ui.view">
+        <field name="name">crm.lead.list.dmag</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="dmag_segment_id" optional="show"/>
+                <field name="dmag_stage_g" optional="hide"/>
+                <field name="dmag_disc" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_search_dmag" model="ir.ui.view">
+        <field name="name">crm.lead.search.dmag</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='salesperson']" position="before">
+                <filter string="Phân khúc" name="group_dmag_segment" context="{'group_by': 'dmag_segment_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_dmag_pipeline" model="ir.actions.act_window">
+        <field name="name">Pipeline DMAG</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,list,form,pivot,graph,calendar,activity</field>
+        <field name="domain">[('type', '=', 'opportunity'), ('team_id.dmag_pipeline_type', '!=', False)]</field>
+        <field name="context">{'default_type': 'opportunity', 'search_default_assigned_to_me': 0}</field>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+
+    <record id="action_dmag_pipeline_diagnosis" model="ir.actions.act_window">
+        <field name="name">P1 · Chẩn đoán</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="domain" eval="[('type', '=', 'opportunity'), ('team_id', '=', ref('team_diagnosis'))]"/>
+        <field name="context" eval="{'default_type': 'opportunity', 'default_team_id': ref('team_diagnosis')}"/>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+
+    <record id="action_dmag_pipeline_prescription" model="ir.actions.act_window">
+        <field name="name">P2 · Lộ trình module</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="domain" eval="[('type', '=', 'opportunity'), ('team_id', '=', ref('team_prescription'))]"/>
+        <field name="context" eval="{'default_type': 'opportunity', 'default_team_id': ref('team_prescription')}"/>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_dmag_delivery" name="Triển khai" parent="dmag_crm.menu_dmag_root" sequence="25"/>
+    <menuitem id="menu_dmag_delivery_flagged" name="Cần can thiệp" parent="menu_dmag_delivery" action="action_dmag_delivery_flagged" sequence="5"/>
+    <menuitem id="menu_dmag_delivery_plan" name="Lộ trình triển khai" parent="menu_dmag_delivery" action="action_dmag_delivery_plan" sequence="10"/>
+    <menuitem id="menu_dmag_delivery_session" name="Buổi làm việc" parent="menu_dmag_delivery" action="action_dmag_delivery_session" sequence="20"/>
+    <menuitem id="menu_dmag_delivery_courses" name="Khoá eLearning" parent="menu_dmag_delivery" action="website_slides.slide_channel_action_overview" sequence="30"/>
+    <menuitem id="menu_dmag_delivery_projects" name="Dự án thực địa" parent="menu_dmag_delivery" action="project.open_view_project_all" sequence="40"/>
+</odoo>

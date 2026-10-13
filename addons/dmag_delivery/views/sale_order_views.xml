@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_dmag_delivery" model="ir.ui.view">
+        <field name="name">sale.order.form.dmag.delivery</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_dmag_delivery_plan)d" type="action" class="oe_stat_button" icon="fa-road"
+                        invisible="not dmag_delivery_plan_count" context="{'search_default_sale_order_id': id, 'default_sale_order_id': id}">
+                    <field name="dmag_delivery_plan_count" widget="statinfo" string="Lộ trình"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

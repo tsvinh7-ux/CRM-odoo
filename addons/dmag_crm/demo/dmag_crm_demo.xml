@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dữ liệu minh hoạ, tên phòng khám là giả định. -->
+    <record id="demo_clinic_a" model="res.partner">
+        <field name="name">Nha khoa Demo Ánh Dương</field>
+        <field name="is_company" eval="True"/>
+        <field name="dmag_is_clinic" eval="True"/>
+        <field name="phone">0901 000 111</field>
+        <field name="city">Hà Nội</field>
+        <field name="dmag_chair_count">6</field>
+        <field name="dmag_doctor_count">4</field>
+        <field name="dmag_staff_count">12</field>
+        <field name="dmag_monthly_revenue">900</field>
+        <field name="dmag_owner_revenue_pct">60</field>
+        <field name="dmag_owner_chair_hours">55</field>
+        <field name="dmag_specialty">ortho</field>
+        <field name="dmag_hub">Hà Nội</field>
+        <field name="dmag_segment_id" ref="segment_pk3"/>
+        <field name="dmag_stage_g">g1</field>
+        <field name="dmag_lifecycle">sql</field>
+        <field name="dmag_account_owner_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_clinic_a_owner" model="res.partner">
+        <field name="name">BS. Trần Minh (demo)</field>
+        <field name="parent_id" ref="demo_clinic_a"/>
+        <field name="function">Chủ phòng khám</field>
+        <field name="dmag_buying_role">decision</field>
+        <field name="dmag_owner_type">owner_doctor</field>
+        <field name="dmag_disc">d</field>
+        <field name="dmag_consent" eval="True"/>
+    </record>
+    <record id="demo_clinic_a_manager" model="res.partner">
+        <field name="name">Lê Thu Hà (demo)</field>
+        <field name="parent_id" ref="demo_clinic_a"/>
+        <field name="function">Quản lý phòng khám</field>
+        <field name="dmag_buying_role">influencer</field>
+        <field name="dmag_owner_type">manager</field>
+        <field name="dmag_disc">c</field>
+    </record>
+
+    <record id="demo_clinic_b" model="res.partner">
+        <field name="name">Nha khoa Demo Bình An</field>
+        <field name="is_company" eval="True"/>
+        <field name="dmag_is_clinic" eval="True"/>
+        <field name="phone">0902 000 222</field>
+        <field name="city">Thái Nguyên</field>
+        <field name="dmag_chair_count">2</field>
+        <field name="dmag_monthly_revenue">150</field>
+        <field name="dmag_owner_revenue_pct">95</field>
+        <field name="dmag_hub">Thái Nguyên</field>
+        <field name="dmag_segment_id" ref="segment_pk1"/>
+        <field name="dmag_stage_g">g0</field>
+        <field name="dmag_lifecycle">mql</field>
+    </record>
+    <record id="demo_clinic_b_owner" model="res.partner">
+        <field name="name">BS. Phạm Hoà (demo)</field>
+        <field name="parent_id" ref="demo_clinic_b"/>
+        <field name="dmag_buying_role">decision</field>
+        <field name="dmag_owner_type">owner_doctor</field>
+        <field name="dmag_disc">s</field>
+    </record>
+
+    <record id="demo_clinic_c" model="res.partner">
+        <field name="name">Nha khoa Demo Cát Tường</field>
+        <field name="is_company" eval="True"/>
+        <field name="dmag_is_clinic" eval="True"/>
+        <field name="phone">+84 903 000 333</field>
+        <field name="city">Cần Thơ</field>
+        <field name="dmag_chair_count">3</field>
+        <field name="dmag_monthly_revenue">400</field>
+        <field name="dmag_hub">Cần Thơ</field>
+        <field name="dmag_lifecycle">follower</field>
+    </record>
+
+    <record id="demo_lead_a" model="crm.lead">
+        <field name="name">Ánh Dương – Chẩn đoán DDA</field>
+        <field name="type">opportunity</field>
+        <field name="partner_id" ref="demo_clinic_a_owner"/>
+        <field name="team_id" ref="team_diagnosis"/>
+        <field name="stage_id" ref="stage_p1_fastcheck"/>
+        <field name="dmag_fastcheck_done" eval="True"/>
+        <field name="dmag_fastcheck_score">4</field>
+        <field name="expected_revenue">9900000</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_lead_b" model="crm.lead">
+        <field name="name">Bình An – Quan tâm sách &amp; DME Club</field>
+        <field name="type">opportunity</field>
+        <field name="partner_id" ref="demo_clinic_b_owner"/>
+        <field name="team_id" ref="team_edu"/>
+        <field name="stage_id" ref="stage_p3_interest"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_lead_c" model="crm.lead">
+        <field name="name">Cát Tường – Lead từ hội thảo vùng</field>
+        <field name="type">opportunity</field>
+        <field name="partner_id" ref="demo_clinic_c"/>
+        <field name="team_id" ref="team_diagnosis"/>
+        <field name="stage_id" ref="stage_p1_new"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+</odoo>

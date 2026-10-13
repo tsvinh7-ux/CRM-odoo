@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="product_dda_deposit" model="product.template">
+            <field name="name">Đặt cọc kiểm toán DDA thực địa</field>
+            <field name="type">service</field>
+            <field name="list_price">9900000</field>
+            <field name="dmag_is_dda_deposit" eval="True"/>
+            <field name="invoice_policy">order</field>
+            <field name="description_sale">Cọc suất kiểm toán DDA 10 trụ cột tại phòng khám, kèm báo cáo Radar.</field>
+        </record>
+    </data>
+</odoo>

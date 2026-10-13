@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 10 trụ cột DDA, ngưỡng theo "3 Khung tiêu chuẩn DDA" (16/09/2026). Sửa được trong Cấu hình. -->
+    <data noupdate="1">
+        <record id="pillar_t1" model="dmag.pillar">
+            <field name="code">T1</field>
+            <field name="name">Pháp lý Y tế, CCHN &amp; Danh mục kỹ thuật</field>
+            <field name="sequence">1</field>
+            <field name="pass_score">10</field>
+            <field name="dso_score">10</field>
+            <field name="is_knockout" eval="True"/>
+        </record>
+        <record id="pillar_t2" model="dmag.pillar">
+            <field name="code">T2</field>
+            <field name="name">Pháp nhân, Kế toán Thuế &amp; Công nợ trả góp</field>
+            <field name="sequence">2</field>
+            <field name="pass_score">8</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t3" model="dmag.pillar">
+            <field name="code">T3</field>
+            <field name="name">Lãnh đạo, Văn hoá &amp; mức "Buông ghế"</field>
+            <field name="sequence">3</field>
+            <field name="pass_score">8</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t4" model="dmag.pillar">
+            <field name="code">T4</field>
+            <field name="name">Nhân sự, Lương 3P, NDA/Non-compete, BS thỉnh giảng</field>
+            <field name="sequence">4</field>
+            <field name="pass_score">7</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t5" model="dmag.pillar">
+            <field name="code">T5</field>
+            <field name="name">Lâm sàng, Sales 2 bước, Phân cấp 3 bậc</field>
+            <field name="sequence">5</field>
+            <field name="pass_score">8</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t6" model="dmag.pillar">
+            <field name="code">T6</field>
+            <field name="name">Rủi ro y khoa, Vô trùng, Khủng hoảng</field>
+            <field name="sequence">6</field>
+            <field name="pass_score">8</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t7" model="dmag.pillar">
+            <field name="code">T7</field>
+            <field name="name">Hạ tầng ghế, Điều phối lịch, HĐ thuê mặt bằng</field>
+            <field name="sequence">7</field>
+            <field name="pass_score">7</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t8" model="dmag.pillar">
+            <field name="code">T8</field>
+            <field name="name">Chuỗi cung ứng, COGS, Kiểm toán chéo Labo</field>
+            <field name="sequence">8</field>
+            <field name="pass_score">7</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t9" model="dmag.pillar">
+            <field name="code">T9</field>
+            <field name="name">EHR, CRM Recall, Dashboard+</field>
+            <field name="sequence">9</field>
+            <field name="pass_score">8</field>
+            <field name="dso_score">8.5</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+        <record id="pillar_t10" model="dmag.pillar">
+            <field name="code">T10</field>
+            <field name="name">Tiếp thị tử tế, Trần Ads, Thương hiệu</field>
+            <field name="sequence">10</field>
+            <field name="pass_score">7</field>
+            <field name="dso_score">8.0</field>
+            <field name="is_knockout" eval="False"/>
+        </record>
+    </data>
+</odoo>

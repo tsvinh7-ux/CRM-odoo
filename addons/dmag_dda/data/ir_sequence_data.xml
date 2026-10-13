@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_dmag_dda_audit" model="ir.sequence">
+            <field name="name">Hồ sơ DDA</field>
+            <field name="code">dmag.dda.audit</field>
+            <field name="prefix">DDA/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_dmag_prescription" model="ir.sequence">
+            <field name="name">Đơn kê lộ trình</field>
+            <field name="code">dmag.prescription</field>
+            <field name="prefix">RX/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

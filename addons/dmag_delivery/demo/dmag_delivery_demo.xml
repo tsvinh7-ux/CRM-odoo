@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_channel_t8" model="slide.channel">
+        <field name="name">[Demo] Kiểm soát COGS ≤ 22%</field>
+        <field name="channel_type">training</field>
+        <field name="enroll">invite</field>
+        <field name="description">Khoá minh hoạ cho hình thức Tự học / Học có hướng dẫn của module M-T8-01.</field>
+    </record>
+    <record id="dmag_dda.product_m_t8_01_self" model="product.template">
+        <field name="dmag_channel_id" ref="demo_channel_t8"/>
+    </record>
+    <record id="dmag_dda.product_m_t8_01_guided" model="product.template">
+        <field name="dmag_channel_id" ref="demo_channel_t8"/>
+        <field name="dmag_session_count">3</field>
+    </record>
+    <record id="dmag_dda.product_m_t3_01_one_on_one" model="product.template">
+        <field name="dmag_session_count">6</field>
+    </record>
+
+    <!-- Đơn bán minh hoạ: 3 hình thức khác nhau → xác nhận để sinh lộ trình -->
+    <record id="demo_order_a" model="sale.order">
+        <field name="partner_id" ref="dmag_crm.demo_clinic_a"/>
+        <field name="opportunity_id" ref="dmag_crm.demo_lead_a"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_order_a_l1" model="sale.order.line">
+        <field name="order_id" ref="demo_order_a"/>
+        <field name="product_id" model="product.product" eval="obj().env.ref('dmag_dda.product_m_t3_01_one_on_one').product_variant_id.id"/>
+    </record>
+    <record id="demo_order_a_l2" model="sale.order.line">
+        <field name="order_id" ref="demo_order_a"/>
+        <field name="product_id" model="product.product" eval="obj().env.ref('dmag_dda.product_m_t8_01_guided').product_variant_id.id"/>
+    </record>
+    <record id="demo_order_a_l3" model="sale.order.line">
+        <field name="order_id" ref="demo_order_a"/>
+        <field name="product_id" model="product.product" eval="obj().env.ref('dmag_dda.product_m_t9_01_field').product_variant_id.id"/>
+    </record>
+    <function model="sale.order" name="action_confirm" eval="[[ref('demo_order_a')]]"/>
+    <function model="dmag.delivery.plan" name="_cron_daily"/>
+</odoo>

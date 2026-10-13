@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_commission_statement_view_form" model="ir.ui.view">
+        <field name="name">dmag.commission.statement.form</field>
+        <field name="model">dmag.commission.statement</field>
+        <field name="arch" type="xml">
+            <form string="Bảng kê hoa hồng">
+                <header>
+                    <button name="action_refresh" type="object" string="Cập nhật dòng" invisible="state != 'draft'"/>
+                    <button name="action_confirm" type="object" string="Xác nhận" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_approve" type="object" string="Duyệt" invisible="state != 'confirmed'" class="btn-primary"
+                            groups="dmag_crm.group_dmag_manager"/>
+                    <button name="action_push_payroll" type="object" string="Đẩy sang lương" invisible="state != 'approved'" class="btn-primary"
+                            groups="dmag_crm.group_dmag_manager"/>
+                    <button name="action_reset_draft" type="object" string="Mở lại" invisible="state in ('draft', 'payroll')"
+                            groups="dmag_crm.group_dmag_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="user_id" widget="many2one_avatar_user" readonly="state != 'draft'"/>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                            <field name="assignment_id"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="target"/>
+                            <field name="collected"/>
+                            <field name="achievement" widget="progressbar"/>
+                            <field name="commission_base"/>
+                            <field name="multiplier"/>
+                            <field name="commission_total" class="fw-bold"/>
+                            <field name="payroll_code"/>
+                            <field name="payroll_month"/>
+                        </group>
+                    </group>
+                    <field name="line_ids" readonly="1"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_commission_statement_view_list" model="ir.ui.view">
+        <field name="name">dmag.commission.statement.list</field>
+        <field name="model">dmag.commission.statement</field>
+        <field name="arch" type="xml">
+            <list string="Bảng kê hoa hồng">
+                <field name="date_from"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="target" optional="show"/>
+                <field name="collected"/>
+                <field name="achievement" widget="progressbar"/>
+                <field name="commission_base" optional="hide"/>
+                <field name="multiplier" optional="show"/>
+                <field name="commission_total" sum="Tổng"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="payroll_code" optional="hide"/>
+                <field name="payroll_month" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'payroll'" decoration-info="state == 'approved'" decoration-warning="state == 'confirmed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_dmag_commission_statement" model="ir.actions.act_window">
+        <field name="name">Bảng kê hoa hồng</field>
+        <field name="res_model">dmag.commission.statement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

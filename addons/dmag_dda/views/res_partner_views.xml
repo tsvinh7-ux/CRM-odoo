@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_dmag_dda" model="ir.ui.view">
+        <field name="name">res.partner.form.dmag.dda</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_dmag_view_audits" type="object" class="oe_stat_button" icon="fa-stethoscope"
+                        invisible="not is_company">
+                    <field name="dmag_audit_count" widget="statinfo" string="DDA"/>
+                </button>
+                <button name="action_dmag_view_prescriptions" type="object" class="oe_stat_button" icon="fa-list-alt"
+                        invisible="not is_company">
+                    <field name="dmag_prescription_count" widget="statinfo" string="Đơn kê"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

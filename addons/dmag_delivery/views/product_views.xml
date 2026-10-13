@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_dmag_delivery" model="ir.ui.view">
+        <field name="name">product.template.form.dmag.delivery</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="dmag_dda.product_template_form_dmag"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='dmag_tier']" position="after">
+                <field name="dmag_channel_id" invisible="dmag_tier not in ('self', 'guided')"/>
+                <field name="dmag_session_count" invisible="dmag_tier not in ('guided', 'one_on_one')"/>
+                <field name="dmag_sprint_count" invisible="dmag_tier != 'field'"/>
+                <field name="dmag_duration_days" invisible="not dmag_is_module"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_dda_audit_view_form" model="ir.ui.view">
+        <field name="name">dmag.dda.audit.form</field>
+        <field name="model">dmag.dda.audit</field>
+        <field name="arch" type="xml">
+            <form string="Kiểm toán DDA">
+                <header>
+                    <button name="action_mark_deposit" type="object" string="Xác nhận đã cọc" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_start_onsite" type="object" string="Bắt đầu onsite" invisible="state not in ('draft', 'deposit')" class="btn-primary"/>
+                    <button name="action_submit_review" type="object" string="Gửi thẩm định" invisible="state != 'onsite'" class="btn-primary"/>
+                    <button name="action_approve" type="object" string="Phán quyết" invisible="state != 'review'"
+                            class="btn-primary" groups="dmag_crm.group_dmag_manager"/>
+                    <button name="action_create_prescription" type="object" string="Kê đơn lộ trình" invisible="state != 'done'" class="btn-primary"/>
+                    <button name="action_print_radar" type="object" string="In Radar" invisible="state != 'done'"/>
+                    <button name="action_reset_draft" type="object" string="Về nháp" invisible="state not in ('cancel', 'review')"/>
+                    <button name="action_cancel" type="object" string="Huỷ" invisible="state in ('done', 'cancel')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,deposit,onsite,review,done"/>
+                </header>
+                <div class="alert alert-danger mb-0 text-center" role="alert" invisible="not t1_redflag">
+                    <strong>Cờ đỏ T1 – điểm liệt chưa đạt.</strong> Luồng 1: chỉ kê module khắc phục T1.
+                </div>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_prescriptions" type="object" class="oe_stat_button" icon="fa-list-alt"
+                                invisible="not prescription_count">
+                            <field name="prescription_count" widget="statinfo" string="Đơn kê"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="lead_id"/>
+                            <field name="is_reaudit"/>
+                            <field name="auditor_id" widget="many2one_avatar_user"/>
+                            <field name="reviewer_id" widget="many2one_avatar_user"/>
+                            <field name="date_onsite"/>
+                            <field name="date_decision"/>
+                        </group>
+                        <group string="Kết quả">
+                            <field name="total_self"/>
+                            <field name="total_genba"/>
+                            <field name="perception_gap"/>
+                            <field name="segment_id"/>
+                            <field name="flow"/>
+                            <field name="stage_g"/>
+                            <field name="pass_ok"/>
+                            <field name="dso_ok"/>
+                            <field name="t1_redflag" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Chấm 10 trụ cột" name="lines">
+                            <field name="line_ids" readonly="state in ('done', 'cancel')">
+                                <list editable="bottom" create="false" delete="false"
+                                      decoration-danger="result == 'redflag'" decoration-warning="result == 'fail'" decoration-success="result == 'pass'">
+                                    <field name="pillar_id" readonly="1"/>
+                                    <field name="self_score"/>
+                                    <field name="genba_score"/>
+                                    <field name="pass_score"/>
+                                    <field name="gap"/>
+                                    <field name="result"/>
+                                    <field name="scored" optional="hide"/>
+                                    <field name="finding" optional="show"/>
+                                    <field name="legal_basis" optional="hide"/>
+                                    <field name="remedy90" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Radar" name="radar">
+                            <field name="radar_svg" nolabel="1"/>
+                        </page>
+                        <page string="Kết luận hội đồng" name="conclusion">
+                            <field name="conclusion"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_dda_audit_view_list" model="ir.ui.view">
+        <field name="name">dmag.dda.audit.list</field>
+        <field name="model">dmag.dda.audit</field>
+        <field name="arch" type="xml">
+            <list string="Kiểm toán DDA" decoration-danger="t1_redflag" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date_onsite"/>
+                <field name="auditor_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="total_self" optional="show"/>
+                <field name="total_genba"/>
+                <field name="segment_id"/>
+                <field name="flow" optional="hide"/>
+                <field name="t1_redflag" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state in ('onsite', 'review')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dmag_dda_audit_view_search" model="ir.ui.view">
+        <field name="name">dmag.dda.audit.search</field>
+        <field name="model">dmag.dda.audit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <filter string="Chờ thẩm định" name="to_review" domain="[('state', '=', 'review')]"/>
+                <filter string="Đã phán quyết" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Cờ đỏ T1" name="redflag" domain="[('t1_redflag', '=', True)]"/>
+                <group>
+                    <filter string="Phân khúc" name="group_segment" context="{'group_by': 'segment_id'}"/>
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dmag_dda_audit" model="ir.actions.act_window">
+        <field name="name">Kiểm toán DDA</field>
+        <field name="res_model">dmag.dda.audit</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Tạo hồ sơ kiểm toán DDA</p>
+            <p>Mọi hợp tác bắt đầu bằng DDA: chấm 10 trụ cột, hội đồng phán quyết, ra Radar và kê đơn lộ trình.</p>
+        </field>
+    </record>
+</odoo>
