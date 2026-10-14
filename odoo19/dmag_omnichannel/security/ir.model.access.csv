@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_channel_account_user,channel account user,model_dmag_channel_account,dmag_crm.group_dmag_user,1,0,0,0
+access_channel_account_manager,channel account manager,model_dmag_channel_account,dmag_crm.group_dmag_manager,1,1,1,1
+access_channel_identity_user,channel identity user,model_dmag_channel_identity,dmag_crm.group_dmag_user,1,1,1,0
+access_conversation_user,conversation user,model_dmag_conversation,dmag_crm.group_dmag_user,1,1,1,0
+access_conversation_manager,conversation manager,model_dmag_conversation,dmag_crm.group_dmag_manager,1,1,1,1
+access_conversation_message_user,conversation message user,model_dmag_conversation_message,dmag_crm.group_dmag_user,1,1,1,0
+access_call_user,call user,model_dmag_call,dmag_crm.group_dmag_user,1,1,1,0
+access_call_manager,call manager,model_dmag_call,dmag_crm.group_dmag_manager,1,1,1,1
+access_channel_event_manager,channel event manager,model_dmag_channel_event,dmag_crm.group_dmag_manager,1,1,0,1
+access_channel_reply_user,channel reply user,model_dmag_channel_reply,dmag_crm.group_dmag_user,1,1,1,1

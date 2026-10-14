@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Pipeline DMAG -->
+        <record id="team_diagnosis" model="crm.team">
+            <field name="name">P1 · Chẩn đoán</field>
+            <field name="sequence">1</field>
+            <field name="dmag_pipeline_type">diagnosis</field>
+            <field name="use_leads" eval="True"/>
+            <field name="use_opportunities" eval="True"/>
+        </record>
+        <record id="team_prescription" model="crm.team">
+            <field name="name">P2 · Lộ trình module</field>
+            <field name="sequence">2</field>
+            <field name="dmag_pipeline_type">prescription</field>
+            <field name="use_opportunities" eval="True"/>
+        </record>
+        <record id="team_edu" model="crm.team">
+            <field name="name">P3 · EDU giao dịch</field>
+            <field name="sequence">3</field>
+            <field name="dmag_pipeline_type">edu</field>
+            <field name="use_opportunities" eval="True"/>
+        </record>
+        <record id="team_tech" model="crm.team">
+            <field name="name">P4 · TECH</field>
+            <field name="sequence">4</field>
+            <field name="dmag_pipeline_type">tech</field>
+            <field name="use_opportunities" eval="True"/>
+        </record>
+
+
+        <!-- P1 · Chẩn đoán -->
+        <record id="stage_p1_new" model="crm.stage">
+            <field name="name">Mới</field>
+            <field name="sequence">101</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+        </record>
+        <record id="stage_p1_profile" model="crm.stage">
+            <field name="name">Hồ sơ đầu vào (DISC + PK)</field>
+            <field name="sequence">102</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+            <field name="requirements">Có DISC người quyết định và phân khúc sơ bộ.</field>
+            <field name="dmag_required_field_ids" eval="[(6, 0, [ref('field_crm_lead__dmag_disc'), ref('field_crm_lead__dmag_segment_id')])]"/>
+        </record>
+        <record id="stage_p1_fastcheck" model="crm.stage">
+            <field name="name">Fast-Check</field>
+            <field name="sequence">103</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+            <field name="requirements">Đã làm Fast-Check.</field>
+            <field name="dmag_required_field_ids" eval="[(6, 0, [ref('field_crm_lead__dmag_disc'), ref('field_crm_lead__dmag_segment_id'), ref('field_crm_lead__dmag_fastcheck_done')])]"/>
+        </record>
+        <record id="stage_p1_booking" model="crm.stage">
+            <field name="name">Hẹn DDA</field>
+            <field name="sequence">104</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+            <field name="requirements">Đã chốt lịch onsite và gửi VietQR đặt cọc 9,9tr.</field>
+            <field name="dmag_required_field_ids" eval="[(6, 0, [ref('field_crm_lead__dmag_fastcheck_done')])]"/>
+        </record>
+        <record id="stage_p1_paid" model="crm.stage">
+            <field name="name">Đã cọc DDA</field>
+            <field name="sequence">105</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+            <field name="requirements">Tiền cọc DDA đã về và đối soát.</field>
+        </record>
+        <record id="stage_p1_onsite" model="crm.stage">
+            <field name="name">Đã onsite</field>
+            <field name="sequence">106</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+        </record>
+        <record id="stage_p1_review" model="crm.stage">
+            <field name="name">Đã thẩm định</field>
+            <field name="sequence">107</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+        </record>
+        <record id="stage_p1_radar" model="crm.stage">
+            <field name="name">Đã trình bày Radar</field>
+            <field name="sequence">108</field>
+            <field name="is_won" eval="True"/>
+            <field name="team_ids" eval="[(6, 0, [ref('team_diagnosis')])]"/>
+            <field name="requirements">Có báo cáo Radar và biên bản trình bày. Tạo cơ hội ở P2.</field>
+        </record>
+
+        <!-- P2 · Lộ trình module -->
+        <record id="stage_p2_draft" model="crm.stage">
+            <field name="name">Đơn kê nháp</field>
+            <field name="sequence">201</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_prescription')])]"/>
+        </record>
+        <record id="stage_p2_consult" model="crm.stage">
+            <field name="name">Đã tư vấn đơn kê</field>
+            <field name="sequence">202</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_prescription')])]"/>
+        </record>
+        <record id="stage_p2_quote" model="crm.stage">
+            <field name="name">Báo giá</field>
+            <field name="sequence">203</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_prescription')])]"/>
+        </record>
+        <record id="stage_p2_negotiation" model="crm.stage">
+            <field name="name">Đàm phán</field>
+            <field name="sequence">204</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_prescription')])]"/>
+        </record>
+        <record id="stage_p2_won" model="crm.stage">
+            <field name="name">Thắng (HĐ + cọc)</field>
+            <field name="sequence">205</field>
+            <field name="is_won" eval="True"/>
+            <field name="team_ids" eval="[(6, 0, [ref('team_prescription')])]"/>
+        </record>
+
+        <!-- P3 · EDU -->
+        <record id="stage_p3_interest" model="crm.stage">
+            <field name="name">Quan tâm</field>
+            <field name="sequence">301</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_edu')])]"/>
+        </record>
+        <record id="stage_p3_paid" model="crm.stage">
+            <field name="name">Đã thanh toán</field>
+            <field name="sequence">302</field>
+            <field name="is_won" eval="True"/>
+            <field name="team_ids" eval="[(6, 0, [ref('team_edu')])]"/>
+        </record>
+
+        <!-- P4 · TECH -->
+        <record id="stage_p4_demo" model="crm.stage">
+            <field name="name">Demo</field>
+            <field name="sequence">401</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_tech')])]"/>
+        </record>
+        <record id="stage_p4_proposal" model="crm.stage">
+            <field name="name">Đề xuất</field>
+            <field name="sequence">402</field>
+            <field name="team_ids" eval="[(6, 0, [ref('team_tech')])]"/>
+        </record>
+        <record id="stage_p4_won" model="crm.stage">
+            <field name="name">Kích hoạt</field>
+            <field name="sequence">403</field>
+            <field name="is_won" eval="True"/>
+            <field name="team_ids" eval="[(6, 0, [ref('team_tech')])]"/>
+        </record>
+
+        <record id="capacity_current" model="dmag.capacity">
+            <field name="slots_total">3</field>
+            <field name="note">Chỉ tiêu suất triển khai thực địa của quý hiện tại (đếm và cảnh báo, không chặn cứng).</field>
+        </record>
+    </data>
+</odoo>

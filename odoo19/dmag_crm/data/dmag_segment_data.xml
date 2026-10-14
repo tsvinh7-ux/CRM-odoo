@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Ngưỡng tạm theo "3 Phân loại Khách hàng theo tiêu chuẩn DDA" (24/09/2026). Sửa được trong Cấu hình. -->
+    <data noupdate="1">
+        <record id="segment_pk1" model="dmag.segment">
+            <field name="code">PK1</field>
+            <field name="name">Sinh tồn / Xây nền</field>
+            <field name="sequence">1</field>
+            <field name="score_min">0</field>
+            <field name="score_max">40</field>
+            <field name="revenue_min">0</field>
+            <field name="revenue_max">230</field>
+            <field name="chair_min">1</field>
+            <field name="chair_max">2</field>
+            <field name="stage_g">g0</field>
+            <field name="flow">2</field>
+            <field name="allow_one_on_one" eval="False"/>
+            <field name="allow_field" eval="False"/>
+            <field name="channel_note">Group Facebook Y Dược, gian hàng VIDEC</field>
+            <field name="description">~65% thị trường. Chủ tạo &gt; 90% doanh số. Chỉ bán sách, DME Club, module tự học / có hướng dẫn.</field>
+        </record>
+        <record id="segment_pk2" model="dmag.segment">
+            <field name="code">PK2</field>
+            <field name="name">Khởi sắc rủi ro</field>
+            <field name="sequence">2</field>
+            <field name="score_min">40</field>
+            <field name="score_max">50</field>
+            <field name="revenue_min">230</field>
+            <field name="revenue_max">580</field>
+            <field name="chair_min">2</field>
+            <field name="chair_max">4</field>
+            <field name="stage_g">g2</field>
+            <field name="flow">3</field>
+            <field name="channel_note">Zalo OA, Facebook Ads, Roundtable vùng</field>
+            <field name="description">~20% thị trường. Chủ tạo 75–85% doanh số.</field>
+        </record>
+        <record id="segment_pk3" model="dmag.segment">
+            <field name="code">PK3</field>
+            <field name="name">Bẫy thợ / Chạm trần</field>
+            <field name="sequence">3</field>
+            <field name="score_min">50</field>
+            <field name="score_max">75</field>
+            <field name="revenue_min">580</field>
+            <field name="revenue_max">1350</field>
+            <field name="chair_min">4</field>
+            <field name="chair_max">7</field>
+            <field name="stage_g">g3</field>
+            <field name="flow">4</field>
+            <field name="is_focus" eval="True"/>
+            <field name="channel_note">Bài viết lãnh đạo, Executive Summit, giới thiệu từ DME Club</field>
+            <field name="description">~10% thị trường, trọng tâm 80/20. Chủ ngồi ghế 50–60h/tuần, COGS &gt; 25%.</field>
+        </record>
+        <record id="segment_pk4" model="dmag.segment">
+            <field name="code">PK4</field>
+            <field name="name">Doanh nghiệp độc lập</field>
+            <field name="sequence">4</field>
+            <field name="score_min">75</field>
+            <field name="score_max">85</field>
+            <field name="revenue_min">1350</field>
+            <field name="revenue_max">2500</field>
+            <field name="chair_min">6</field>
+            <field name="chair_max">10</field>
+            <field name="stage_g">g4</field>
+            <field name="flow">5</field>
+            <field name="channel_note">Thư mời C-level, Genba Tour</field>
+            <field name="description">~3,5% thị trường. Chủ tạo &lt; 30% doanh thu.</field>
+        </record>
+        <record id="segment_pk5" model="dmag.segment">
+            <field name="code">PK5</field>
+            <field name="name">Chuỗi &amp; Flagship</field>
+            <field name="sequence">5</field>
+            <field name="score_min">85</field>
+            <field name="score_max">0</field>
+            <field name="revenue_min">2500</field>
+            <field name="revenue_max">0</field>
+            <field name="stage_g">g5</field>
+            <field name="flow">6</field>
+            <field name="channel_note">Tiếp cận 1-1, Hội đồng cố vấn, quỹ PE</field>
+            <field name="description">~1,5% thị trường. Nhiều cơ sở, doanh thu &gt; 2,5 tỷ/tháng.</field>
+        </record>
+    </data>
+</odoo>

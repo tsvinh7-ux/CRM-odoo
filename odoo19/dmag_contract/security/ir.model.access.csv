@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dmag_contract_user,contract user,model_dmag_contract,dmag_crm.group_dmag_user,1,1,1,0
+access_dmag_contract_manager,contract manager,model_dmag_contract,dmag_crm.group_dmag_manager,1,1,1,1
+access_dmag_contract_invoice,contract accountant,model_dmag_contract,account.group_account_invoice,1,1,0,0
+access_dmag_contract_schedule_user,contract schedule user,model_dmag_contract_schedule,dmag_crm.group_dmag_user,1,1,1,1
+access_dmag_contract_schedule_invoice,contract schedule accountant,model_dmag_contract_schedule,account.group_account_invoice,1,1,0,0

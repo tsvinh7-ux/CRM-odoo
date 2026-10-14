@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_dmag_diagnosis" name="Chẩn đoán" parent="dmag_crm.menu_dmag_root" sequence="15"/>
+    <menuitem id="menu_dmag_dda_audit" name="Kiểm toán DDA" parent="menu_dmag_diagnosis" action="action_dmag_dda_audit" sequence="10"/>
+    <menuitem id="menu_dmag_prescription" name="Đơn kê lộ trình" parent="menu_dmag_diagnosis" action="action_dmag_prescription" sequence="20"/>
+
+    <menuitem id="menu_dmag_catalog" name="Danh mục module" parent="dmag_crm.menu_dmag_config" action="action_dmag_module_catalog" sequence="5"/>
+    <menuitem id="menu_dmag_pillar" name="Trụ cột DDA" parent="dmag_crm.menu_dmag_config" action="action_dmag_pillar" sequence="6"/>
+</odoo>

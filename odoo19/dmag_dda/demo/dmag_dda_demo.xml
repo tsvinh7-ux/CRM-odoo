@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Danh mục module MINH HOẠ: tên và giá là giả định, chờ DMAG điền file "4 Danh mục SPDV". -->
+    <record id="product_m_t1_01_self" model="product.template">
+        <field name="name">[M-T1-01] Chuẩn hoá pháp lý y tế &amp; danh mục kỹ thuật – Tự học</field>
+        <field name="type">service</field>
+        <field name="list_price">3000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T1-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t1"/>
+        <field name="dmag_tier">self</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t1_01_guided" model="product.template">
+        <field name="name">[M-T1-01] Chuẩn hoá pháp lý y tế &amp; danh mục kỹ thuật – Học có hướng dẫn</field>
+        <field name="type">service</field>
+        <field name="list_price">9000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T1-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t1"/>
+        <field name="dmag_tier">guided</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t1_01_one_on_one" model="product.template">
+        <field name="name">[M-T1-01] Chuẩn hoá pháp lý y tế &amp; danh mục kỹ thuật – Kèm 1:1</field>
+        <field name="type">service</field>
+        <field name="list_price">25000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T1-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t1"/>
+        <field name="dmag_tier">one_on_one</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t1_01_field" model="product.template">
+        <field name="name">[M-T1-01] Chuẩn hoá pháp lý y tế &amp; danh mục kỹ thuật – Triển khai thực địa</field>
+        <field name="type">service</field>
+        <field name="list_price">60000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T1-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t1"/>
+        <field name="dmag_tier">field</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t3_01_self" model="product.template">
+        <field name="name">[M-T3-01] Buông ghế chủ ≤ 25h/tuần – Tự học</field>
+        <field name="type">service</field>
+        <field name="list_price">3000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T3-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t3"/>
+        <field name="dmag_tier">self</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t3_01_guided" model="product.template">
+        <field name="name">[M-T3-01] Buông ghế chủ ≤ 25h/tuần – Học có hướng dẫn</field>
+        <field name="type">service</field>
+        <field name="list_price">9000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T3-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t3"/>
+        <field name="dmag_tier">guided</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t3_01_one_on_one" model="product.template">
+        <field name="name">[M-T3-01] Buông ghế chủ ≤ 25h/tuần – Kèm 1:1</field>
+        <field name="type">service</field>
+        <field name="list_price">25000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T3-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t3"/>
+        <field name="dmag_tier">one_on_one</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t3_01_field" model="product.template">
+        <field name="name">[M-T3-01] Buông ghế chủ ≤ 25h/tuần – Triển khai thực địa</field>
+        <field name="type">service</field>
+        <field name="list_price">60000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T3-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t3"/>
+        <field name="dmag_tier">field</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t5_01_self" model="product.template">
+        <field name="name">[M-T5-01] Sales 2 bước &amp; phân cấp lâm sàng 3 bậc – Tự học</field>
+        <field name="type">service</field>
+        <field name="list_price">3000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T5-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t5"/>
+        <field name="dmag_tier">self</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t5_01_guided" model="product.template">
+        <field name="name">[M-T5-01] Sales 2 bước &amp; phân cấp lâm sàng 3 bậc – Học có hướng dẫn</field>
+        <field name="type">service</field>
+        <field name="list_price">9000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T5-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t5"/>
+        <field name="dmag_tier">guided</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t5_01_one_on_one" model="product.template">
+        <field name="name">[M-T5-01] Sales 2 bước &amp; phân cấp lâm sàng 3 bậc – Kèm 1:1</field>
+        <field name="type">service</field>
+        <field name="list_price">25000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T5-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t5"/>
+        <field name="dmag_tier">one_on_one</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t5_01_field" model="product.template">
+        <field name="name">[M-T5-01] Sales 2 bước &amp; phân cấp lâm sàng 3 bậc – Triển khai thực địa</field>
+        <field name="type">service</field>
+        <field name="list_price">60000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T5-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t5"/>
+        <field name="dmag_tier">field</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t8_01_self" model="product.template">
+        <field name="name">[M-T8-01] Kiểm soát COGS ≤ 22% &amp; kiểm toán chéo Labo – Tự học</field>
+        <field name="type">service</field>
+        <field name="list_price">3000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T8-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t8"/>
+        <field name="dmag_tier">self</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t8_01_guided" model="product.template">
+        <field name="name">[M-T8-01] Kiểm soát COGS ≤ 22% &amp; kiểm toán chéo Labo – Học có hướng dẫn</field>
+        <field name="type">service</field>
+        <field name="list_price">9000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T8-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t8"/>
+        <field name="dmag_tier">guided</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t8_01_one_on_one" model="product.template">
+        <field name="name">[M-T8-01] Kiểm soát COGS ≤ 22% &amp; kiểm toán chéo Labo – Kèm 1:1</field>
+        <field name="type">service</field>
+        <field name="list_price">25000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T8-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t8"/>
+        <field name="dmag_tier">one_on_one</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t8_01_field" model="product.template">
+        <field name="name">[M-T8-01] Kiểm soát COGS ≤ 22% &amp; kiểm toán chéo Labo – Triển khai thực địa</field>
+        <field name="type">service</field>
+        <field name="list_price">60000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T8-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t8"/>
+        <field name="dmag_tier">field</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t9_01_self" model="product.template">
+        <field name="name">[M-T9-01] CRM Recall &amp; Dashboard+ – Tự học</field>
+        <field name="type">service</field>
+        <field name="list_price">3000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T9-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t9"/>
+        <field name="dmag_tier">self</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t9_01_guided" model="product.template">
+        <field name="name">[M-T9-01] CRM Recall &amp; Dashboard+ – Học có hướng dẫn</field>
+        <field name="type">service</field>
+        <field name="list_price">9000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T9-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t9"/>
+        <field name="dmag_tier">guided</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t9_01_one_on_one" model="product.template">
+        <field name="name">[M-T9-01] CRM Recall &amp; Dashboard+ – Kèm 1:1</field>
+        <field name="type">service</field>
+        <field name="list_price">25000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T9-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t9"/>
+        <field name="dmag_tier">one_on_one</field>
+        <field name="invoice_policy">order</field>
+    </record>
+    <record id="product_m_t9_01_field" model="product.template">
+        <field name="name">[M-T9-01] CRM Recall &amp; Dashboard+ – Triển khai thực địa</field>
+        <field name="type">service</field>
+        <field name="list_price">60000000</field>
+        <field name="dmag_is_module" eval="True"/>
+        <field name="dmag_module_code">M-T9-01</field>
+        <field name="dmag_pillar_id" ref="pillar_t9"/>
+        <field name="dmag_tier">field</field>
+        <field name="invoice_policy">order</field>
+    </record>
+
+    <!-- Hồ sơ DDA minh hoạ cho phòng khám PK3 (điểm giả định) -->
+    <record id="demo_audit_a" model="dmag.dda.audit">
+        <field name="partner_id" ref="dmag_crm.demo_clinic_a"/>
+        <field name="lead_id" ref="dmag_crm.demo_lead_a"/>
+        <field name="state">review</field>
+        <field name="date_onsite" eval="(DateTime.today() - relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+        <field name="conclusion">&lt;p&gt;Phòng khám có nền lâm sàng tốt nhưng chủ còn ngồi ghế quá nhiều, COGS cao, chưa có CRM Recall.&lt;/p&gt;</field>
+    </record>
+    <function model="dmag.dda.audit" name="_dmag_demo_fill"
+              eval="[[ref('demo_audit_a')], [10, 7, 6, 7, 8, 7.5, 7, 6, 5, 7], [10, 7, 4, 6, 6, 7, 6, 3.5, 1.5, 6]]"/>
+    <function model="dmag.dda.audit" name="action_approve" eval="[[ref('demo_audit_a')]]"/>
+    <function model="dmag.dda.audit" name="action_create_prescription" eval="[[ref('demo_audit_a')]]"/>
+
+    <!-- Phòng khám PK1 có cờ đỏ T1 -->
+    <record id="demo_audit_b" model="dmag.dda.audit">
+        <field name="partner_id" ref="dmag_crm.demo_clinic_b"/>
+        <field name="state">review</field>
+        <field name="date_onsite" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+    </record>
+    <function model="dmag.dda.audit" name="_dmag_demo_fill"
+              eval="[[ref('demo_audit_b')], [9, 6, 6, 5, 6, 6, 5, 5, 4, 5], [6, 3, 2.5, 3, 4, 3.5, 3, 2.5, 1.5, 3]]"/>
+    <function model="dmag.dda.audit" name="action_approve" eval="[[ref('demo_audit_b')]]"/>
+</odoo>

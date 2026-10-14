@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_contract_view_form" model="ir.ui.view">
+        <field name="name">dmag.contract.form</field>
+        <field name="model">dmag.contract</field>
+        <field name="arch" type="xml">
+            <form string="Hợp đồng">
+                <header>
+                    <button name="action_generate_schedule" type="object" string="Sinh lịch thu" invisible="state != 'draft'"/>
+                    <button name="action_sign" type="object" string="Xác nhận đã ký" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_done" type="object" string="Hoàn tất" invisible="state != 'signed'"/>
+                    <button name="action_reset_draft" type="object" string="Về nháp" invisible="state != 'cancel'"/>
+                    <button name="action_cancel" type="object" string="Huỷ" invisible="state in ('done', 'cancel')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,signed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <div class="o_stat_info">
+                                <span class="o_stat_value"><field name="amount_invoiced" widget="monetary"/></span>
+                                <span class="o_stat_text">Đã xuất HĐ</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                        <field name="title" placeholder="Tên hợp đồng"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sale_order_id" readonly="state != 'draft'"/>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="lead_id"/>
+                            <field name="prescription_id"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group>
+                            <field name="date_sign"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="signed_document" filename="signed_document_name"/>
+                            <field name="signed_document_name" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Tài chính">
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount_total"/>
+                            <field name="amount_invoiced"/>
+                            <field name="amount_paid"/>
+                        </group>
+                        <group>
+                            <field name="amount_due"/>
+                            <field name="amount_overdue" decoration-danger="amount_overdue &gt; 0"/>
+                            <field name="paid_percent" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lịch thu" name="schedule">
+                            <group>
+                                <field name="schedule_pattern" readonly="state != 'draft'"/>
+                                <field name="schedule_interval_days" readonly="state != 'draft'"/>
+                            </group>
+                            <field name="schedule_ids">
+                                <tree editable="bottom" decoration-danger="state == 'overdue'" decoration-success="state == 'paid'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="percent"/>
+                                    <field name="amount" sum="Tổng"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <field name="due_date"/>
+                                    <field name="invoice_id"/>
+                                    <field name="amount_residual"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'paid'" decoration-danger="state == 'overdue'" decoration-info="state == 'invoiced'"/>
+                                    <button name="action_create_invoice" type="object" string="Xuất HĐ" icon="fa-file-text-o"
+                                            invisible="invoice_id or parent.state != 'signed'"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Điều khoản" name="terms">
+                            <field name="terms"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_contract_view_list" model="ir.ui.view">
+        <field name="name">dmag.contract.list</field>
+        <field name="model">dmag.contract</field>
+        <field name="arch" type="xml">
+            <tree string="Hợp đồng" decoration-danger="amount_overdue &gt; 0">
+                <field name="name"/>
+                <field name="title" optional="show"/>
+                <field name="partner_id"/>
+                <field name="date_sign"/>
+                <field name="amount_total" sum="Tổng"/>
+                <field name="amount_paid" sum="Tổng"/>
+                <field name="amount_due" sum="Tổng"/>
+                <field name="amount_overdue" sum="Tổng" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="paid_percent" widget="progressbar" optional="show"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'signed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dmag_contract_view_search" model="ir.ui.view">
+        <field name="name">dmag.contract.search</field>
+        <field name="model">dmag.contract</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="lead_id"/>
+                <filter string="Đang hiệu lực" name="signed" domain="[('state', '=', 'signed')]"/>
+                <filter string="Của tôi" name="mine" domain="[('user_id', '=', uid)]"/>
+                <group>
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Người phụ trách" name="group_user" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dmag_contract" model="ir.actions.act_window">
+        <field name="name">Hợp đồng</field>
+        <field name="res_model">dmag.contract</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

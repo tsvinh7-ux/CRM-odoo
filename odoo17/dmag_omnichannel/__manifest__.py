@@ -1,0 +1,30 @@
+{
+    'name': 'DMAG Đa kênh (Facebook, Zalo OA, Stringee)',
+    'version': '17.0.1.0.0',
+    'category': 'Sales/CRM',
+    'summary': 'Đồng bộ chat Facebook Messenger, Zalo OA và cuộc gọi Stringee vào lead CRM: '
+               'hộp thư đa kênh, dòng thời gian trong chatter, gọi click-to-call, ghi âm',
+    'author': 'DMAG',
+    'license': 'LGPL-3',
+    'depends': ['dmag_crm', 'mail', 'utm'],
+    'external_dependencies': {'python': ['requests']},
+    'data': [
+        'security/ir.model.access.csv',
+        'data/mail_subtype_data.xml',
+        'data/utm_data.xml',
+        'data/ir_cron_data.xml',
+        'views/dmag_channel_account_views.xml',
+        'views/dmag_conversation_views.xml',
+        'views/dmag_call_views.xml',
+        'views/dmag_channel_event_views.xml',
+        'wizard/dmag_channel_reply_views.xml',
+        'views/crm_lead_views.xml',
+        'views/res_partner_views.xml',
+        'views/res_users_views.xml',
+        'views/dmag_omnichannel_menus.xml',
+    ],
+    'demo': [
+        'demo/dmag_omnichannel_demo.xml',
+    ],
+    'installable': True,
+}

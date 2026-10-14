@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_dmag_contract" name="Hợp đồng" parent="dmag_crm.menu_dmag_sales" action="action_dmag_contract" sequence="45"/>
+</odoo>

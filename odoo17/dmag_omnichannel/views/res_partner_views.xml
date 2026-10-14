@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_dmag_omnichannel" model="ir.ui.view">
+        <field name="name">res.partner.form.dmag.omnichannel</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_dmag_view_conversations" type="object" class="oe_stat_button" icon="fa-comments"
+                        invisible="not dmag_conversation_count">
+                    <field name="dmag_conversation_count" widget="statinfo" string="Hội thoại"/>
+                </button>
+                <button name="action_dmag_view_calls" type="object" class="oe_stat_button" icon="fa-phone"
+                        invisible="not dmag_call_count">
+                    <field name="dmag_call_count" widget="statinfo" string="Cuộc gọi"/>
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='dmag']" position="inside">
+                <separator string="Tài khoản trên các kênh"/>
+                <field name="dmag_identity_ids" readonly="1">
+                    <tree>
+                        <field name="channel" widget="badge"/>
+                        <field name="name"/>
+                        <field name="external_id"/>
+                        <field name="followed"/>
+                        <field name="last_inbound_date"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+</odoo>

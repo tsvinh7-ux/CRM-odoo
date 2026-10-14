@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_delivery_session_view_form" model="ir.ui.view">
+        <field name="name">dmag.delivery.session.form</field>
+        <field name="model">dmag.delivery.session</field>
+        <field name="arch" type="xml">
+            <form string="Buổi làm việc">
+                <header>
+                    <button name="action_done" type="object" string="Đã diễn ra" invisible="state != 'planned'" class="btn-primary"/>
+                    <button name="action_cancel" type="object" string="Huỷ" invisible="state != 'planned'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="line_id" options="{'no_create': True}"/>
+                            <field name="partner_id"/>
+                            <field name="kind"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="duration" widget="float_time"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="calendar_event_id"/>
+                        </group>
+                    </group>
+                    <group string="Biên bản">
+                        <field name="situation"/>
+                        <field name="work_done"/>
+                        <field name="commitments"/>
+                        <field name="next_deadline"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_delivery_session_view_list" model="ir.ui.view">
+        <field name="name">dmag.delivery.session.list</field>
+        <field name="model">dmag.delivery.session</field>
+        <field name="arch" type="xml">
+            <tree string="Buổi làm việc">
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="kind"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="next_deadline" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'planned'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dmag_delivery_session_view_calendar" model="ir.ui.view">
+        <field name="name">dmag.delivery.session.calendar</field>
+        <field name="model">dmag.delivery.session</field>
+        <field name="arch" type="xml">
+            <calendar string="Lịch triển khai" date_start="date" color="user_id" mode="week">
+                <field name="partner_id"/>
+                <field name="kind"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_dmag_delivery_session" model="ir.actions.act_window">
+        <field name="name">Buổi làm việc</field>
+        <field name="res_model">dmag.delivery.session</field>
+        <field name="view_mode">tree,calendar,form</field>
+    </record>
+</odoo>

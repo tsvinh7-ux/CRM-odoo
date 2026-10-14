@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_commission_line_view_list" model="ir.ui.view">
+        <field name="name">dmag.commission.line.list</field>
+        <field name="model">dmag.commission.line</field>
+        <field name="arch" type="xml">
+            <tree string="Dòng hoa hồng" create="false" decoration-danger="is_clawback">
+                <field name="date"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="role"/>
+                <field name="partner_id"/>
+                <field name="invoice_id" optional="show"/>
+                <field name="product_id" optional="show"/>
+                <field name="commission_group" optional="hide"/>
+                <field name="base_amount"/>
+                <field name="share" optional="show"/>
+                <field name="rate"/>
+                <field name="amount" sum="Tổng"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="is_clawback" optional="hide"/>
+                <field name="statement_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dmag_commission_line_view_search" model="ir.ui.view">
+        <field name="name">dmag.commission.line.search</field>
+        <field name="model">dmag.commission.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="user_id"/>
+                <field name="partner_id"/>
+                <field name="invoice_id"/>
+                <filter string="Chưa vào bảng kê" name="unassigned" domain="[('statement_id', '=', False)]"/>
+                <filter string="Dòng trừ lại" name="clawback" domain="[('is_clawback', '=', True)]"/>
+                <filter string="Tháng này" name="this_month" date="date"/>
+                <group>
+                    <filter string="Nhân sự" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Vai trò" name="group_role" context="{'group_by': 'role'}"/>
+                    <filter string="Nhóm sản phẩm" name="group_group" context="{'group_by': 'commission_group'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dmag_commission_line" model="ir.actions.act_window">
+        <field name="name">Dòng hoa hồng</field>
+        <field name="res_model">dmag.commission.line</field>
+        <field name="view_mode">tree,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Chưa có hoa hồng phát sinh</p>
+            <p>Dòng hoa hồng tự sinh khi một khoản thanh toán được đối soát vào hoá đơn bán hàng.</p>
+        </field>
+    </record>
+</odoo>

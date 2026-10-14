@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mt_channel_message" model="mail.message.subtype">
+        <field name="name">Tin nhắn Facebook/Zalo</field>
+        <field name="internal" eval="True"/>
+        <field name="default" eval="False"/>
+        <field name="sequence">50</field>
+    </record>
+    <record id="mt_call" model="mail.message.subtype">
+        <field name="name">Cuộc gọi</field>
+        <field name="internal" eval="True"/>
+        <field name="default" eval="False"/>
+        <field name="sequence">51</field>
+    </record>
+</odoo>

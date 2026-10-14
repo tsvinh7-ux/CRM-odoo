@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_dmag_dda" model="ir.ui.view">
+        <field name="name">crm.lead.form.dmag.dda</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="dmag_crm.crm_lead_view_form_dmag"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='dmag']/group" position="inside">
+                <group string="DDA &amp; đơn kê">
+                    <field name="dmag_dda_paid"/>
+                    <field name="dmag_dda_paid_manual" groups="dmag_crm.group_dmag_manager"/>
+                    <field name="dmag_radar_ready"/>
+                    <field name="dmag_prescription_ready"/>
+                    <div colspan="2" class="d-flex gap-2">
+                        <button name="action_dmag_create_deposit_quotation" type="object" string="Báo giá cọc DDA"
+                                class="btn-secondary" invisible="dmag_dda_paid"/>
+                        <button name="action_dmag_create_audit" type="object" string="Tạo hồ sơ DDA" class="btn-secondary"/>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_form_dmag_dda_button" model="ir.ui.view">
+        <field name="name">crm.lead.form.dmag.dda.button</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_dmag_view_audits" type="object" class="oe_stat_button" icon="fa-stethoscope"
+                        invisible="not dmag_audit_count">
+                    <field name="dmag_audit_count" widget="statinfo" string="DDA"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

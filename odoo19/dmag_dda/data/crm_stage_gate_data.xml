@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="dmag_crm.stage_p1_paid" model="crm.stage">
+            <field name="dmag_required_field_ids" eval="[(4, ref('field_crm_lead__dmag_dda_paid'))]"/>
+        </record>
+        <record id="dmag_crm.stage_p1_onsite" model="crm.stage">
+            <field name="dmag_required_field_ids" eval="[(4, ref('field_crm_lead__dmag_dda_paid'))]"/>
+        </record>
+        <record id="dmag_crm.stage_p1_radar" model="crm.stage">
+            <field name="dmag_required_field_ids" eval="[(4, ref('field_crm_lead__dmag_radar_ready'))]"/>
+        </record>
+        <record id="dmag_crm.stage_p2_quote" model="crm.stage">
+            <field name="dmag_required_field_ids" eval="[(4, ref('field_crm_lead__dmag_prescription_ready'))]"/>
+        </record>
+    </data>
+</odoo>

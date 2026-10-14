@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dmag_segment_user,dmag.segment user,model_dmag_segment,group_dmag_user,1,0,0,0
+access_dmag_segment_manager,dmag.segment manager,model_dmag_segment,group_dmag_manager,1,1,1,1
+access_dmag_capacity_user,dmag.capacity user,model_dmag_capacity,group_dmag_user,1,0,0,0
+access_dmag_capacity_manager,dmag.capacity manager,model_dmag_capacity,group_dmag_manager,1,1,1,1

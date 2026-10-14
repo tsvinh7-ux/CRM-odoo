@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_commission_plan_view_form" model="ir.ui.view">
+        <field name="name">dmag.commission.plan.form</field>
+        <field name="model">dmag.commission.plan</field>
+        <field name="arch" type="xml">
+            <form string="Chính sách hoa hồng">
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" placeholder="Chính sách hoa hồng 2026"/></h1></div>
+                    <group>
+                        <group string="Hệ số theo % hoàn thành mục tiêu thực thu">
+                            <field name="low_threshold"/>
+                            <field name="low_multiplier"/>
+                            <field name="high_threshold"/>
+                            <field name="high_multiplier"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="commission_group"/>
+                            <field name="rate"/>
+                        </tree>
+                    </field>
+                    <div class="text-muted small">
+                        Hoa hồng chỉ tính trên tiền đã thu và đã đối soát vào hoá đơn (chưa VAT). Hoàn tiền / huỷ đối soát sẽ sinh dòng trừ lại.
+                    </div>
+                    <field name="note" placeholder="Ghi chú chính sách…"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_commission_plan_view_list" model="ir.ui.view">
+        <field name="name">dmag.commission.plan.list</field>
+        <field name="model">dmag.commission.plan</field>
+        <field name="arch" type="xml">
+            <tree string="Chính sách hoa hồng">
+                <field name="name"/>
+                <field name="low_threshold"/>
+                <field name="low_multiplier"/>
+                <field name="high_multiplier"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_dmag_commission_plan" model="ir.actions.act_window">
+        <field name="name">Chính sách hoa hồng</field>
+        <field name="res_model">dmag.commission.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="dmag_commission_assignment_view_form" model="ir.ui.view">
+        <field name="name">dmag.commission.assignment.form</field>
+        <field name="model">dmag.commission.assignment</field>
+        <field name="arch" type="xml">
+            <form string="Gán chính sách hoa hồng">
+                <header>
+                    <button name="action_approve" type="object" string="Duyệt" invisible="state != 'draft'" class="btn-primary"
+                            groups="dmag_crm.group_dmag_manager"/>
+                    <button name="action_reset_draft" type="object" string="Về nháp" invisible="state != 'approved'"
+                            groups="dmag_crm.group_dmag_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="plan_id"/>
+                            <field name="monthly_target"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <separator string="Tỷ lệ riêng (ghi đè chính sách)"/>
+                    <field name="override_ids">
+                        <tree editable="bottom">
+                            <field name="commission_group"/>
+                            <field name="rate"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_commission_assignment_view_list" model="ir.ui.view">
+        <field name="name">dmag.commission.assignment.list</field>
+        <field name="model">dmag.commission.assignment</field>
+        <field name="arch" type="xml">
+            <tree string="Gán chính sách">
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="plan_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="monthly_target"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_dmag_commission_assignment" model="ir.actions.act_window">
+        <field name="name">Gán chính sách theo nhân sự</field>
+        <field name="res_model">dmag.commission.assignment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

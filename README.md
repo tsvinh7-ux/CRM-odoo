@@ -4,7 +4,9 @@ Bộ module Odoo cho mô hình **DMAG – Nền tảng Vận hành & Tăng trư�
 một hồ sơ phòng khám → chẩn đoán (DISC + phân khúc + Fast-Check → DDA → Radar) →
 đơn kê lộ trình module × hình thức → triển khai được giám sát tự động → hoa hồng theo thực thu.
 
-> **Trạng thái:** bản demo chạy được trên **Odoo 19.0 Community**. Đã có 35 bài test tự động.
+> **Trạng thái:** có hai bản cùng chức năng, mỗi bản đều qua 35 bài test tự động:
+> - `odoo17/`: cho **Odoo 17.0 Community** (bản DMAG đang dùng). Hướng dẫn cài: `docs/CAI_DAT_ODOO17.md`.
+> - `odoo19/`: cho **Odoo 19.0 Community**, dùng khi nâng cấp.
 > Danh mục module, giá, ngưỡng điểm và chính sách hoa hồng trong dữ liệu mẫu đều là **giả định**,
 > chờ DMAG chốt rồi thay.
 
@@ -27,7 +29,7 @@ Kiến trúc đa kênh và lý do chọn module Odoo thay vì app riêng: xem `d
 ## Chạy demo
 
 ```bash
-# Odoo 19.0 + PostgreSQL. Thêm thư mục addons của repo này vào addons_path.
+# Odoo 17: thêm thư mục odoo17/ vào addons_path (Odoo 19: thư mục odoo19/).
 odoo-bin -c odoo.conf -d dmag_demo -i dmag_lead_hub --with-demo --load-language=vi_VN
 ```
 

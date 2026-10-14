@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_dmag_dda_audit" model="ir.actions.report">
+        <field name="name">Báo cáo Radar DDA</field>
+        <field name="model">dmag.dda.audit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dmag_dda.report_dmag_dda_audit</field>
+        <field name="report_file">dmag_dda.report_dmag_dda_audit</field>
+        <field name="print_report_name">'Radar DDA - %s - %s' % (object.partner_id.name, object.name)</field>
+        <field name="binding_model_id" ref="model_dmag_dda_audit"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_dmag_dda_audit">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="audit">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Báo cáo kiểm toán chẩn đoán DDA</h2>
+                        <p>
+                            <strong t-out="audit.partner_id.name"/> · Mã hồ sơ <span t-out="audit.name"/>
+                            · Onsite <span t-field="audit.date_onsite"/> · Phán quyết <span t-field="audit.date_decision"/>
+                        </p>
+                        <div class="row">
+                            <div class="col-6">
+                                <t t-out="audit._render_radar_svg()"/>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm">
+                                    <tr><td>Tổng tự chấm</td><td class="text-end" t-out="audit.total_self"/></tr>
+                                    <tr><td>Tổng Genba (DMAG chấm)</td><td class="text-end"><strong t-out="audit.total_genba"/></td></tr>
+                                    <tr><td>Lệch nhận thức</td><td class="text-end" t-out="audit.perception_gap"/></tr>
+                                    <tr><td>Phân khúc</td><td class="text-end" t-out="audit.segment_id.display_name or '—'"/></tr>
+                                    <tr><td>Luồng / Chặng</td><td class="text-end"><t t-out="audit.flow"/> / <span t-field="audit.stage_g"/></td></tr>
+                                    <tr><td>Sàn đạt 75 / Chuẩn DSO 85</td>
+                                        <td class="text-end"><t t-out="'Đạt' if audit.pass_ok else 'Chưa'"/> / <t t-out="'Đạt' if audit.dso_ok else 'Chưa'"/></td></tr>
+                                </table>
+                                <div t-if="audit.t1_redflag" class="alert alert-danger">
+                                    Cờ đỏ T1 – Pháp lý y tế chưa đạt điểm liệt.
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-sm mt-3">
+                            <thead>
+                                <tr><th>Trụ cột</th><th class="text-end">Tự chấm</th><th class="text-end">Genba</th>
+                                    <th class="text-end">Sàn</th><th>Kết quả</th><th>Hướng khắc phục 90 ngày</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="audit.line_ids" t-as="line">
+                                    <td t-out="line.pillar_id.display_name"/>
+                                    <td class="text-end" t-out="line.self_score"/>
+                                    <td class="text-end" t-out="line.genba_score"/>
+                                    <td class="text-end" t-out="line.pass_score"/>
+                                    <td><span t-field="line.result"/></td>
+                                    <td t-out="line.remedy90 or ''"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div t-if="audit.conclusion" class="mt-3">
+                            <h4>Kết luận hội đồng</h4>
+                            <div t-field="audit.conclusion"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_channel_reply_view_form" model="ir.ui.view">
+        <field name="name">dmag.channel.reply.form</field>
+        <field name="model">dmag.channel.reply</field>
+        <field name="arch" type="xml">
+            <form string="Trả lời khách">
+                <div class="alert alert-warning" role="alert" invisible="can_reply">
+                    Đã quá hạn nhắn chủ động (Facebook 24 giờ, Zalo 48 giờ từ tin cuối của khách). Hãy gọi điện hoặc gửi tin mẫu ZNS.
+                </div>
+                <group>
+                    <field name="conversation_id" readonly="1"/>
+                    <field name="channel"/>
+                    <field name="reply_deadline"/>
+                    <field name="can_reply" invisible="1"/>
+                </group>
+                <field name="history" readonly="1" context="{'tree_view_ref': 'dmag_omnichannel.dmag_conversation_message_view_list'}"/>
+                <field name="body" placeholder="Nhập tin nhắn…"/>
+                <footer>
+                    <button name="action_send" type="object" string="Gửi" class="btn-primary" invisible="not can_reply"/>
+                    <button string="Đóng" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

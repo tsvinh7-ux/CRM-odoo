@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_order_contract" model="sale.order">
+        <field name="partner_id" ref="dmag_crm.demo_clinic_a"/>
+        <field name="opportunity_id" ref="dmag_crm.demo_lead_a"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_order_contract_l1" model="sale.order.line">
+        <field name="order_id" ref="demo_order_contract"/>
+        <field name="product_id" model="product.product" eval="obj().env.ref('dmag_dda.product_m_t5_01_guided').product_variant_id.id"/>
+    </record>
+    <record id="demo_order_contract_l2" model="sale.order.line">
+        <field name="order_id" ref="demo_order_contract"/>
+        <field name="product_id" model="product.product" eval="obj().env.ref('dmag_dda.product_m_t8_01_one_on_one').product_variant_id.id"/>
+    </record>
+    <function model="dmag.contract.demo" name="_run" eval="[[ref('demo_order_contract')]]"/>
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_prescription_view_form" model="ir.ui.view">
+        <field name="name">dmag.prescription.form</field>
+        <field name="model">dmag.prescription</field>
+        <field name="arch" type="xml">
+            <form string="Đơn kê lộ trình">
+                <header>
+                    <button name="action_generate_lines" type="object" string="Sinh lại từ Radar" invisible="state != 'draft' or not audit_id"
+                            confirm="Ghi đè các dòng hiện có bằng gợi ý từ Radar?"/>
+                    <button name="action_confirm" type="object" string="Duyệt đơn kê" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_create_opportunity" type="object" string="Tạo cơ hội P2" invisible="lead_id or state == 'cancel'"/>
+                    <button name="action_create_quotation" type="object" string="Tạo báo giá" invisible="state != 'confirmed'" class="btn-primary"/>
+                    <button name="action_reset_draft" type="object" string="Về nháp" invisible="state not in ('confirmed', 'cancel')"/>
+                    <button name="action_cancel" type="object" string="Huỷ" invisible="state in ('quoted', 'cancel')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,quoted"/>
+                </header>
+                <div class="alert alert-danger mb-0 text-center" role="alert" invisible="not t1_redflag">
+                    <strong>Cờ đỏ T1.</strong> Chỉ được kê module khắc phục T1 cho đến khi đạt.
+                </div>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="audit_id"/>
+                            <field name="lead_id"/>
+                            <field name="segment_id" options="{'no_create': True}"/>
+                            <field name="t1_redflag" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="amount_total"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="uses_field_tier"/>
+                            <field name="allow_out_of_segment" groups="dmag_crm.group_dmag_manager"/>
+                            <field name="sale_order_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Module × hình thức" name="lines">
+                            <field name="line_ids" readonly="state not in ('draft',)">
+                                <tree editable="bottom" decoration-info="is_override">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="pillar_id"/>
+                                    <field name="gap"/>
+                                    <field name="suggested_tier"/>
+                                    <field name="tier"/>
+                                    <field name="is_override" column_invisible="True"/>
+                                    <field name="product_id"/>
+                                    <field name="price_unit"/>
+                                    <field name="remedy90" optional="show"/>
+                                </tree>
+                            </field>
+                            <div class="text-muted small">
+                                Quy tắc gợi ý: T1 chưa đạt → thực địa; khoảng thiếu ≤1 tự học, ≤3 có hướng dẫn, ≤5 kèm 1:1, &gt;5 thực địa.
+                                Kẹp theo hình thức phân khúc được bán. Dòng màu xanh là dòng chuyên viên đã sửa gợi ý.
+                            </div>
+                        </page>
+                        <page string="Ghi chú tư vấn" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_prescription_view_list" model="ir.ui.view">
+        <field name="name">dmag.prescription.list</field>
+        <field name="model">dmag.prescription</field>
+        <field name="arch" type="xml">
+            <tree string="Đơn kê lộ trình">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="segment_id"/>
+                <field name="audit_id" optional="show"/>
+                <field name="amount_total" sum="Tổng"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="uses_field_tier" optional="show"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'quoted'" decoration-info="state == 'confirmed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_dmag_prescription" model="ir.actions.act_window">
+        <field name="name">Đơn kê lộ trình</field>
+        <field name="res_model">dmag.prescription</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

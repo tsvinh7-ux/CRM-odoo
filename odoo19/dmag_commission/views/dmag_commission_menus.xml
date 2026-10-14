@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_dmag_commission" name="Hoa hồng" parent="dmag_crm.menu_dmag_root" sequence="40"/>
+    <menuitem id="menu_dmag_commission_statement" name="Bảng kê tháng" parent="menu_dmag_commission" action="action_dmag_commission_statement" sequence="10"/>
+    <menuitem id="menu_dmag_commission_line" name="Dòng hoa hồng" parent="menu_dmag_commission" action="action_dmag_commission_line" sequence="20"/>
+    <menuitem id="menu_dmag_commission_generate" name="Tạo bảng kê tháng" parent="menu_dmag_commission" action="action_dmag_commission_generate"
+              sequence="30" groups="dmag_crm.group_dmag_manager"/>
+    <menuitem id="menu_dmag_commission_assignment" name="Gán chính sách theo nhân sự" parent="menu_dmag_commission" action="action_dmag_commission_assignment" sequence="40"/>
+    <menuitem id="menu_dmag_commission_plan" name="Chính sách hoa hồng" parent="dmag_crm.menu_dmag_config" action="action_dmag_commission_plan" sequence="50"/>
+</odoo>

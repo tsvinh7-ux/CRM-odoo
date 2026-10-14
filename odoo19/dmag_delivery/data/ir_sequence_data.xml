@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_dmag_delivery_plan" model="ir.sequence">
+            <field name="name">Lộ trình triển khai</field>
+            <field name="code">dmag.delivery.plan</field>
+            <field name="prefix">LT/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

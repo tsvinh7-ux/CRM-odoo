@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Chính sách DEMO (chưa phải chính sách chính thức của DMAG) -->
+    <record id="demo_plan" model="dmag.commission.plan">
+        <field name="name">Chính sách hoa hồng DEMO 2026</field>
+        <field name="line_ids" eval="[
+            (0, 0, {'commission_group': 'book_event', 'rate': 5}),
+            (0, 0, {'commission_group': 'club', 'rate': 8}),
+            (0, 0, {'commission_group': 'dda_deposit', 'rate': 10}),
+            (0, 0, {'commission_group': 'module_learning', 'rate': 8}),
+            (0, 0, {'commission_group': 'module_one_on_one', 'rate': 6}),
+            (0, 0, {'commission_group': 'module_field', 'rate': 5}),
+            (0, 0, {'commission_group': 'tech_new', 'rate': 10}),
+            (0, 0, {'commission_group': 'tech_renew', 'rate': 3}),
+        ]"/>
+        <field name="note">&lt;p&gt;Tính trên thực thu chưa VAT. Chia: người chốt 70% · người chăm lead 20% · Account Owner 10%. Hệ số: &amp;lt;70% mục tiêu × 0,8; vượt 100% → phần vượt × 1,2.&lt;/p&gt;</field>
+    </record>
+    <record id="demo_assignment_admin" model="dmag.commission.assignment">
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="plan_id" ref="demo_plan"/>
+        <field name="date_from" eval="(DateTime.today().replace(day=1)).strftime('%Y-%m-%d')"/>
+        <field name="monthly_target">30000000</field>
+        <field name="state">approved</field>
+    </record>
+
+    <!-- Thu cọc DDA của phòng khám demo → sinh hoa hồng -->
+    <record id="demo_order_deposit" model="sale.order">
+        <field name="partner_id" ref="dmag_crm.demo_clinic_c"/>
+        <field name="opportunity_id" ref="dmag_crm.demo_lead_c"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_order_deposit_line" model="sale.order.line">
+        <field name="order_id" ref="demo_order_deposit"/>
+        <field name="product_id" model="product.product" eval="obj().env.ref('dmag_dda.product_dda_deposit').product_variant_id.id"/>
+    </record>
+    <function model="dmag.commission.demo" name="_collect" eval="[[ref('demo_order_deposit')], 1.0]"/>
+    <function model="dmag.commission.statement" name="_generate_for_month" eval="[DateTime.today().strftime('%Y-%m-%d')]"/>
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dmag_pillar_user,dmag.pillar user,model_dmag_pillar,dmag_crm.group_dmag_user,1,0,0,0
+access_dmag_pillar_manager,dmag.pillar manager,model_dmag_pillar,dmag_crm.group_dmag_manager,1,1,1,1
+access_dmag_dda_audit_user,dmag.dda.audit user,model_dmag_dda_audit,dmag_crm.group_dmag_user,1,1,1,0
+access_dmag_dda_audit_manager,dmag.dda.audit manager,model_dmag_dda_audit,dmag_crm.group_dmag_manager,1,1,1,1
+access_dmag_dda_audit_line_user,dmag.dda.audit.line user,model_dmag_dda_audit_line,dmag_crm.group_dmag_user,1,1,1,1
+access_dmag_prescription_user,dmag.prescription user,model_dmag_prescription,dmag_crm.group_dmag_user,1,1,1,0
+access_dmag_prescription_manager,dmag.prescription manager,model_dmag_prescription,dmag_crm.group_dmag_manager,1,1,1,1
+access_dmag_prescription_line_user,dmag.prescription.line user,model_dmag_prescription_line,dmag_crm.group_dmag_user,1,1,1,1

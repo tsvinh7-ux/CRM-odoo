@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_segment_view_list" model="ir.ui.view">
+        <field name="name">dmag.segment.list</field>
+        <field name="model">dmag.segment</field>
+        <field name="arch" type="xml">
+            <tree string="Phân khúc">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="score_min"/>
+                <field name="score_max"/>
+                <field name="revenue_min"/>
+                <field name="revenue_max"/>
+                <field name="stage_g"/>
+                <field name="flow"/>
+                <field name="allow_self"/>
+                <field name="allow_guided"/>
+                <field name="allow_one_on_one"/>
+                <field name="allow_field"/>
+                <field name="partner_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dmag_segment_view_form" model="ir.ui.view">
+        <field name="name">dmag.segment.form</field>
+        <field name="model">dmag.segment</field>
+        <field name="arch" type="xml">
+            <form string="Phân khúc">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_partners" type="object" class="oe_stat_button" icon="fa-hospital-o">
+                            <field name="partner_count" widget="statinfo" string="Phòng khám"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="code" class="oe_inline" placeholder="PK3"/> · <field name="name" class="oe_inline"/></h1>
+                    </div>
+                    <group>
+                        <group string="Ngưỡng">
+                            <field name="score_min"/>
+                            <field name="score_max"/>
+                            <field name="revenue_min"/>
+                            <field name="revenue_max"/>
+                            <field name="chair_min"/>
+                            <field name="chair_max"/>
+                        </group>
+                        <group string="Hành trình">
+                            <field name="stage_g"/>
+                            <field name="flow"/>
+                            <field name="is_focus"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Hình thức được bán">
+                            <field name="allow_self"/>
+                            <field name="allow_guided"/>
+                            <field name="allow_one_on_one"/>
+                            <field name="allow_field"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="channel_note"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_dmag_segment" model="ir.actions.act_window">
+        <field name="name">Phân khúc PK</field>
+        <field name="res_model">dmag.segment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
