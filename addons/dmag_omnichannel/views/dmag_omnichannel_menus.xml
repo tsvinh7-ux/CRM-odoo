@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_dmag_omnichannel" name="Đa kênh" parent="dmag_crm.menu_dmag_root" sequence="12"/>
+    <menuitem id="menu_dmag_conversation" name="Hộp thư Facebook/Zalo" parent="menu_dmag_omnichannel" action="action_dmag_conversation" sequence="10"/>
+    <menuitem id="menu_dmag_call" name="Cuộc gọi" parent="menu_dmag_omnichannel" action="action_dmag_call" sequence="20"/>
+    <menuitem id="menu_dmag_channel_event" name="Nhật ký webhook" parent="menu_dmag_omnichannel" action="action_dmag_channel_event"
+              sequence="90" groups="dmag_crm.group_dmag_manager"/>
+    <menuitem id="menu_dmag_channel_account" name="Kết nối kênh (FB/Zalo/Stringee)" parent="dmag_crm.menu_dmag_config"
+              action="action_dmag_channel_account" sequence="60"/>
+</odoo>

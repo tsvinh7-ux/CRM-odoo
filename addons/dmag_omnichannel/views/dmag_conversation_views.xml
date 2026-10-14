@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_conversation_message_view_list" model="ir.ui.view">
+        <field name="name">dmag.conversation.message.list</field>
+        <field name="model">dmag.conversation.message</field>
+        <field name="arch" type="xml">
+            <list string="Tin nhắn" create="false" decoration-info="direction == 'out'" decoration-danger="state == 'failed'">
+                <field name="date"/>
+                <field name="direction"/>
+                <field name="body"/>
+                <field name="attachment_urls" optional="hide"/>
+                <field name="author_user_id" optional="show" widget="many2one_avatar_user"/>
+                <field name="state" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dmag_conversation_view_form" model="ir.ui.view">
+        <field name="name">dmag.conversation.form</field>
+        <field name="model">dmag.conversation</field>
+        <field name="arch" type="xml">
+            <form string="Hội thoại">
+                <header>
+                    <button name="action_reply" type="object" string="Trả lời" class="btn-primary" invisible="channel == 'stringee'"/>
+                    <button name="action_create_lead" type="object" string="Tạo lead" invisible="lead_id"/>
+                    <button name="action_mark_read" type="object" string="Đánh dấu đã đọc" invisible="not unread_count"/>
+                    <button name="action_close" type="object" string="Đóng hội thoại" invisible="state == 'closed'"/>
+                    <button name="action_reopen" type="object" string="Mở lại" invisible="state != 'closed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="account_id" readonly="1"/>
+                            <field name="identity_id" readonly="1"/>
+                            <field name="partner_id"/>
+                            <field name="lead_id"/>
+                        </group>
+                        <group>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="last_message_date"/>
+                            <field name="unread_count"/>
+                            <field name="reply_deadline"/>
+                            <field name="can_reply" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="message_line_ids" readonly="1" context="{'list_view_ref': 'dmag_omnichannel.dmag_conversation_message_view_list'}"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_conversation_view_list" model="ir.ui.view">
+        <field name="name">dmag.conversation.list</field>
+        <field name="model">dmag.conversation</field>
+        <field name="arch" type="xml">
+            <list string="Hộp thư đa kênh" decoration-bf="unread_count &gt; 0">
+                <field name="last_message_date"/>
+                <field name="channel" widget="badge"/>
+                <field name="name"/>
+                <field name="partner_id" optional="show"/>
+                <field name="lead_id" optional="show"/>
+                <field name="last_message_preview"/>
+                <field name="unread_count"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="state" widget="badge" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dmag_conversation_view_kanban" model="ir.ui.view">
+        <field name="name">dmag.conversation.kanban</field>
+        <field name="model">dmag.conversation</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" group_create="false">
+                <field name="unread_count"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-center gap-2">
+                            <field name="channel" widget="badge"/>
+                            <field name="name" class="fw-bold text-truncate"/>
+                            <span t-if="record.unread_count.raw_value" class="badge text-bg-danger ms-auto"><field name="unread_count"/></span>
+                        </div>
+                        <field name="last_message_preview" class="small text-muted"/>
+                        <field name="lead_id" class="small"/>
+                        <footer>
+                            <field name="last_message_date" class="small"/>
+                            <field name="user_id" widget="many2one_avatar_user" class="ms-auto"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="dmag_conversation_view_search" model="ir.ui.view">
+        <field name="name">dmag.conversation.search</field>
+        <field name="model">dmag.conversation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="lead_id"/>
+                <filter string="Chưa đọc" name="unread" domain="[('unread_count', '&gt;', 0)]"/>
+                <filter string="Của tôi" name="mine" domain="[('user_id', '=', uid)]"/>
+                <filter string="Chưa có lead" name="no_lead" domain="[('lead_id', '=', False)]"/>
+                <separator/>
+                <filter string="Facebook" name="facebook" domain="[('channel', '=', 'facebook')]"/>
+                <filter string="Zalo" name="zalo" domain="[('channel', '=', 'zalo')]"/>
+                <group>
+                    <filter string="Kênh" name="group_channel" context="{'group_by': 'channel'}"/>
+                    <filter string="Phụ trách" name="group_user" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dmag_conversation" model="ir.actions.act_window">
+        <field name="name">Hộp thư đa kênh</field>
+        <field name="res_model">dmag.conversation</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Chưa có hội thoại</p>
+            <p>Tin nhắn Facebook Messenger và Zalo OA sẽ tự vào đây và gắn vào lead tương ứng.</p>
+        </field>
+    </record>
+</odoo>

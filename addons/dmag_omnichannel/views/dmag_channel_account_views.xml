@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dmag_channel_account_view_form" model="ir.ui.view">
+        <field name="name">dmag.channel.account.form</field>
+        <field name="model">dmag.channel.account</field>
+        <field name="arch" type="xml">
+            <form string="Kết nối kênh">
+                <header>
+                    <button name="action_test_connection" type="object" string="Kiểm tra kết nối"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_conversations" type="object" class="oe_stat_button" icon="fa-comments" invisible="channel == 'stringee'">
+                            <field name="conversation_count" widget="statinfo" string="Hội thoại"/>
+                        </button>
+                        <button name="action_view_calls" type="object" class="oe_stat_button" icon="fa-phone" invisible="channel != 'stringee'">
+                            <field name="call_count" widget="statinfo" string="Cuộc gọi"/>
+                        </button>
+                    </div>
+                    <div class="oe_title"><h1><field name="name" placeholder="Fanpage DMAG / Zalo OA DMAG / Hotline"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="channel"/>
+                            <field name="team_id"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="auto_create_lead"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Webhook">
+                            <field name="webhook_url" widget="CopyClipboardChar" readonly="1"/>
+                            <field name="webhook_token" password="True"/>
+                        </group>
+                    </group>
+                    <group string="Facebook Messenger" invisible="channel != 'facebook'">
+                        <field name="fb_page_id"/>
+                        <field name="fb_page_token" password="True"/>
+                        <field name="fb_app_secret" password="True"/>
+                        <field name="fb_verify_token"/>
+                    </group>
+                    <group string="Zalo OA" invisible="channel != 'zalo'">
+                        <field name="zalo_app_id"/>
+                        <field name="zalo_oa_id"/>
+                        <field name="zalo_secret_key" password="True"/>
+                        <field name="zalo_oa_secret" password="True"/>
+                        <field name="zalo_refresh_token" password="True"/>
+                        <field name="zalo_token_expiry"/>
+                    </group>
+                    <group string="Stringee" invisible="channel != 'stringee'">
+                        <field name="stringee_key_sid"/>
+                        <field name="stringee_key_secret" password="True"/>
+                        <field name="stringee_hotline"/>
+                        <div colspan="2" class="text-muted small">
+                            Khai báo trên Stringee: <b>event_url</b> = URL webhook ở trên;
+                            <b>answer_url</b> = cùng URL nhưng thay "/stringee/event/" bằng "/stringee/answer/".
+                            Mỗi nhân viên khai báo Stringee user ID hoặc số nhận cuộc gọi trong Hồ sơ người dùng.
+                        </div>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="dmag_channel_account_view_list" model="ir.ui.view">
+        <field name="name">dmag.channel.account.list</field>
+        <field name="model">dmag.channel.account</field>
+        <field name="arch" type="xml">
+            <list string="Kết nối kênh">
+                <field name="name"/>
+                <field name="channel"/>
+                <field name="team_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="auto_create_lead"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_dmag_channel_account" model="ir.actions.act_window">
+        <field name="name">Kết nối kênh</field>
+        <field name="res_model">dmag.channel.account</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_dmag_omnichannel" model="ir.ui.view">
+        <field name="name">crm.lead.form.dmag.omnichannel</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_dmag_call" type="object" string="Gọi (Stringee)" icon="fa-phone" class="btn-secondary"/>
+                <button name="action_dmag_send_message" type="object" string="Nhắn Zalo/FB" icon="fa-comments" class="btn-secondary"
+                        invisible="not dmag_conversation_count"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_dmag_view_conversations" type="object" class="oe_stat_button" icon="fa-comments"
+                        invisible="not dmag_conversation_count">
+                    <div class="o_stat_info">
+                        <span class="o_stat_value"><field name="dmag_conversation_count"/></span>
+                        <span class="o_stat_text">Hội thoại</span>
+                    </div>
+                </button>
+                <button name="action_dmag_view_calls" type="object" class="oe_stat_button" icon="fa-phone"
+                        invisible="not dmag_call_count">
+                    <field name="dmag_call_count" widget="statinfo" string="Cuộc gọi"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Hội thoại &amp; cuộc gọi" name="dmag_omnichannel">
+                    <group>
+                        <group>
+                            <field name="dmag_unread_count"/>
+                            <field name="dmag_last_contact_date"/>
+                        </group>
+                    </group>
+                    <separator string="Hội thoại Facebook / Zalo"/>
+                    <field name="dmag_conversation_ids" readonly="1">
+                        <list>
+                            <field name="channel" widget="badge"/>
+                            <field name="name"/>
+                            <field name="last_message_date"/>
+                            <field name="last_message_preview"/>
+                            <field name="unread_count"/>
+                            <field name="state" widget="badge"/>
+                            <button name="action_reply" type="object" icon="fa-reply" title="Trả lời"/>
+                        </list>
+                    </field>
+                    <separator string="Cuộc gọi"/>
+                    <field name="dmag_call_ids" readonly="1" context="{'list_view_ref': 'dmag_omnichannel.dmag_call_view_list'}"/>
+                    <div class="text-muted small">
+                        Toàn bộ tin nhắn, cuộc gọi (kèm ghi âm), email, ghi chú và lịch sử thay đổi giai đoạn
+                        được ghi theo thời gian trong khung trao đổi (chatter) bên cạnh.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_kanban_dmag_omnichannel" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.dmag.omnichannel</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <span class="badge text-bg-danger" invisible="not dmag_unread_count">
+                    <i class="fa fa-comments" title="Tin chưa đọc"/> <field name="dmag_unread_count"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+</odoo>

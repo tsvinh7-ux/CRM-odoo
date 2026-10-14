@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_dmag_hub" model="ir.ui.view">
+        <field name="name">res.partner.form.dmag.hub</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_dmag_view_contracts" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                        invisible="not dmag_contract_count">
+                    <field name="dmag_contract_count" widget="statinfo" string="Hợp đồng"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

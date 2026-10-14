@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_dmag_hub" model="ir.ui.view">
+        <field name="name">crm.lead.form.dmag.hub</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_dmag_open_clinic" type="object" class="oe_stat_button" icon="fa-hospital-o"
+                        invisible="not partner_id">
+                    <div class="o_stat_info"><span class="o_stat_text">Phòng khám</span></div>
+                </button>
+                <button name="action_dmag_view_prescriptions" type="object" class="oe_stat_button" icon="fa-list-alt"
+                        invisible="not dmag_prescription_count">
+                    <field name="dmag_prescription_count" widget="statinfo" string="Đơn kê"/>
+                </button>
+                <button name="action_dmag_view_contracts" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                        invisible="not dmag_contract_count">
+                    <field name="dmag_contract_count" widget="statinfo" string="Hợp đồng"/>
+                </button>
+                <button name="action_dmag_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o"
+                        invisible="not dmag_invoice_count">
+                    <field name="dmag_invoice_count" widget="statinfo" string="Hoá đơn"/>
+                </button>
+                <button name="action_dmag_view_plans" type="object" class="oe_stat_button" icon="fa-road"
+                        invisible="not dmag_plan_count">
+                    <field name="dmag_plan_count" widget="statinfo" string="Lộ trình"/>
+                </button>
+                <button name="action_dmag_view_projects" type="object" class="oe_stat_button" icon="fa-puzzle-piece"
+                        invisible="not dmag_project_count">
+                    <field name="dmag_project_count" widget="statinfo" string="Dự án"/>
+                </button>
+                <button name="action_dmag_view_commissions" type="object" class="oe_stat_button" icon="fa-percent"
+                        invisible="not dmag_commission_count" groups="dmag_crm.group_dmag_manager">
+                    <field name="dmag_commission_count" widget="statinfo" string="Hoa hồng"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Hồ sơ 360°" name="dmag_hub">
+                    <group>
+                        <group string="Tài chính">
+                            <field name="dmag_currency_id" invisible="1"/>
+                            <field name="dmag_amount_ordered"/>
+                            <field name="dmag_amount_invoiced"/>
+                            <field name="dmag_amount_paid"/>
+                            <field name="dmag_amount_due"/>
+                            <field name="dmag_amount_overdue" decoration-danger="dmag_amount_overdue &gt; 0"/>
+                        </group>
+                        <group string="Triển khai">
+                            <field name="dmag_pulse" widget="badge" decoration-success="dmag_pulse == 'green'"
+                                   decoration-warning="dmag_pulse == 'yellow'" decoration-danger="dmag_pulse == 'red'"/>
+                            <field name="dmag_plan_count" string="Số lộ trình"/>
+                            <field name="dmag_project_count" string="Số dự án thực địa"/>
+                        </group>
+                    </group>
+                    <separator string="Hợp đồng"/>
+                    <field name="dmag_contract_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="title"/>
+                            <field name="date_sign"/>
+                            <field name="amount_total"/>
+                            <field name="amount_paid"/>
+                            <field name="amount_overdue"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="paid_percent" widget="progressbar"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                    <separator string="Hoá đơn"/>
+                    <field name="dmag_invoice_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="invoice_date"/>
+                            <field name="invoice_date_due"/>
+                            <field name="amount_total_signed" string="Tổng"/>
+                            <field name="amount_residual_signed" string="Còn nợ"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="company_currency_id" column_invisible="True"/>
+                            <field name="payment_state" widget="badge"/>
+                            <field name="state" column_invisible="True"/>
+                        </list>
+                    </field>
+                    <separator string="Lộ trình triển khai"/>
+                    <field name="dmag_plan_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="date_start"/>
+                            <field name="date_day90"/>
+                            <field name="progress" widget="progressbar"/>
+                            <field name="pulse" widget="badge" decoration-success="pulse == 'green'"
+                                   decoration-warning="pulse == 'yellow'" decoration-danger="pulse == 'red'"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_dmag_contract" model="ir.ui.view">
+        <field name="name">sale.order.form.dmag.contract</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_dmag_create_contract" type="object" string="Hợp đồng" invisible="dmag_contract_count"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_dmag_view_contracts" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                        invisible="not dmag_contract_count">
+                    <field name="dmag_contract_count" widget="statinfo" string="Hợp đồng"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
